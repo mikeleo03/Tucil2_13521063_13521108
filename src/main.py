@@ -26,11 +26,11 @@ import random
 import visual
 import matplotlib.pyplot as plt
 
-# 0.1. Random Point Generator
+# 0.1. Pembangkit titik koordinat acak
 def RandomPoint(dimention) :
     return [random.randint(-10, 10) for i in range (dimention)]
 
-# 0.2. List of Random Point Generator
+# 0.2. Inisialisasi senarai hasil pembangkit titik koordinat acak
 def ListRandomPoint(dimention, numbers) :
     return [RandomPoint(dimention) for i in range (numbers)]
 
@@ -42,7 +42,7 @@ def EuclideanDist3(point1, point2) :
     zdist = pow(point1[2] - point2[2], 2)
     return math.sqrt(xdist + ydist + zdist)
 
-# 1.2. Persamaan Euclidean distance (Generalized)
+# 1.2. Persamaan Euclidean distance (Tergeneralisasi)
 def EuclideanDistGeneral(point1, point2, dimention) :
     # Persamaan : sqrt((x1-x2)^2 + (y1-y2)^2 + (z1-z2)^2 + ...)
     # Inisialisasi senarai hasil
@@ -57,53 +57,126 @@ def EuclideanDistGeneral(point1, point2, dimention) :
     # Finalisasi hasil
     return math.sqrt(result)
 
-# 2. Jarak terdekat ke tengah lintas titik
-
-# . Sorting points in x order
+# 2. Melakukan pengurutan titik berdasarkan nilai koordinat [0]
 def SortPoints(listOfPoints) :
     listOfPoints.sort(key = lambda point : point[0])
     return listOfPoints
 
-# 4. Definisi terdekat
+# 3. Definisi nilai minimum dari 2 nilai masukan
 def minimum(x, y):
     if (x > y) :
         return y
     else :
         return x
 
-def stripClosest(strip, size, minimum, dimention):
+# 4. Pencarian titik terdekat yang berada di tengah dengan batas toleransi delta
+def stripClosest(strip, size, minimum, am, bm, dimention):
+    # Pendefinisian nilai dari parameter, sebagai handler kalau nilainya sama
     min_dist = minimum
+    min_p1 = am
+    min_p2 = bm
+    
+    # Membuat strip dengan melakukan pengurutan berdasarkan nilai koordinat [1]
     strip = sorted(strip, key=lambda point: point[1])
- 
+
+    # Melakukan pengujian jarak terdekat dari titik disekitar pusat dalam batas toleransi
     for i in range(size):
         for j in range(i+1, size):
+            # Kalau ukurannya lebih besar dari delta, lewati
             if (strip[j][1] - strip[i][1]) >= min_dist:
                 break
+
+            # Kalau lebih kecil, update nilai terkecilnya dan titik yang berkoresponden
             if EuclideanDistGeneral(strip[i], strip[j], dimention) < min_dist:
                 min_dist = EuclideanDistGeneral(strip[i], strip[j], dimention)
+                min_p1 = strip[i]
+                min_p2 = strip[j]
     
-    return min_dist
+    # Pengembalian dua titik terdekat dalam batas strip dan jaraknya
+    return min_p1, min_p2, min_dist
 
-# 3. Implementasi rekursif cari kanan kiri
+# 5.1. Implementasi rekursif cari kanan kiri (3 dimensi)
 def ClosestPairPoint3(listOfPoints, numbers, dimention) :
+    # Kondisi pemberhenti rekursifitas, saat jumlah elemen partisi sudah terbatas
     if numbers <= 3:
         a, b, dist = bruteForceDistGeneral(listOfPoints, dimention)
-        return dist
+        # Mengembalikan 2 titik dan nilai jaraknya
+        return a, b, dist
     
+    # Sebelum melakukan pemrosesan, titik diurutkan menaik menggunakan fungsi sortPoints
     sorted = SortPoints(listOfPoints)
     midPoint = numbers // 2
+    
     # Recursively find distance to left and right
-    dist_left = ClosestPairPoint3(sorted[:midPoint], midPoint, dimention)
-    dist_right = ClosestPairPoint3(sorted[midPoint:], numbers - midPoint, dimention)
+    a1, b1, dist_left = ClosestPairPointGeneral(sorted[:midPoint], midPoint, dimention)
+    a2, b2, dist_right = ClosestPairPointGeneral(sorted[midPoint:], numbers - midPoint, dimention)
+    
     # minimum both
     min = minimum(dist_left, dist_right)
+    if (min == dist_left) :
+        am = a1
+        bm = b1
+    else :
+        am = a2
+        bm = b2
+        
     # defining strips
     strip = []
     for i in range(numbers):
         if abs(sorted[i][0] - sorted[midPoint][0]) < min:
             strip.append(sorted[i])
-            
-    return minimum(min, stripClosest(strip, len(strip), min, dimention))
+    
+    # Finishing
+    p1, p2, val = stripClosest(strip, len(strip), min, am, bm, dimention)
+    min_pol = minimum(min, val)
+    if (min_pol == min) :
+        a_min = am
+        b_min = bm
+    else :
+        a_min = p1
+        b_min = p2
+    
+    return a_min, b_min, min_pol
+
+# 3.2. Implementasi rekursif cari kanan kiri (General)
+def ClosestPairPointGeneral(listOfPoints, numbers, dimention) :
+    if numbers <= 3:
+        a, b, dist = bruteForceDistGeneral(listOfPoints, dimention)
+        return a, b, dist
+    
+    sorted = SortPoints(listOfPoints)
+    midPoint = numbers // 2
+    
+    # Recursively find distance to left and right
+    a1, b1, dist_left = ClosestPairPointGeneral(sorted[:midPoint], midPoint, dimention)
+    a2, b2, dist_right = ClosestPairPointGeneral(sorted[midPoint:], numbers - midPoint, dimention)
+    
+    # minimum both
+    min = minimum(dist_left, dist_right)
+    if (min == dist_left) :
+        am = a1
+        bm = b1
+    else :
+        am = a2
+        bm = b2
+        
+    # defining strips
+    strip = []
+    for i in range(numbers):
+        if abs(sorted[i][0] - sorted[midPoint][0]) < min:
+            strip.append(sorted[i])
+    
+    # Finishing
+    p1, p2, val = stripClosest(strip, len(strip), min, am, bm, dimention)
+    min_pol = minimum(min, val)
+    if (min_pol == min) :
+        a_min = am
+        b_min = bm
+    else :
+        a_min = p1
+        b_min = p2
+    
+    return a_min, b_min, min_pol
     
 # 5.1. Bruteforce 3 Points
 def bruteForce(listOfPoints) :
@@ -151,7 +224,7 @@ def visualizeMinimum(listOfPoints) :
     plt.show()
 
 # 5. Main program
-b = ListRandomPoint(3, 10)
+""" b = ListRandomPoint(3, 100)
 print("Daftar kumpulan titik")
 print(b)
 c = SortPoints(b)
@@ -159,9 +232,9 @@ print(c)
 print("Euclidean distance 2 titik pertama")
 print(EuclideanDist3(b[0],b[1]))
 pt1, pt2, shortest = bruteForce(b)
-print(f'Dua titik terdekat yaitu {pt1} dan {pt2} dengan jarak {shortest}')
-shortestcln = ClosestPairPoint3(b, 10, 3)
-print(f'Dua titik terdekat yaitu menurut DnC dengan jarak {shortestcln}')
+print(f'Dua titik terdekat yaitu {pt1} dan {pt2} menurut BruteForce dengan jarak {shortest}')
+shortestcln = ClosestPairPoint3(b, 100, 3)
+print(f'Dua titik terdekat yaitu menurut DnC dengan jarak {shortestcln}') """
 # visualizeMinimum(b)
 
 """ b = ListRandomPoint(2, 10)
@@ -176,14 +249,12 @@ print(f'Dua titik terdekat yaitu {pt1} dan {pt2} menurut BruteForce dengan jarak
 shortestcln = ClosestPairPoint3(b, 10)
 print(f'Dua titik terdekat yaitu menurut DnC dengan jarak {shortestcln}') """
 
-p = ListRandomPoint(5, 10)
+p = ListRandomPoint(5, 100)
 print("Daftar kumpulan titik")
 print(p)
-print("Euclidean distance 2 titik pertama")
-print(EuclideanDistGeneral(p[0],p[1],5))
 pts1, pts2, shortest1 = bruteForceDistGeneral(p, 5)
-print(f'Dua titik terdekat yaitu {pts1} dan {pts2} dengan jarak {shortest1}')
-shortestcln1 = ClosestPairPoint3(b, 10, 5)
-print(f'Dua titik terdekat yaitu menurut DnC dengan jarak {shortestcln1}')
+print(f'Dua titik terdekat yaitu {pts1} dan {pts2} menurut BruteForce dengan jarak {shortest1}')
+pts3, pts4, shortestcln1 = ClosestPairPointGeneral(p, 100, 5)
+print(f'Dua titik terdekat yaitu {pts3} dan {pts4} menurut DnC dengan jarak {shortestcln1}')
 
 # Note : implement bonus ilustrasi dan generalized R^n point di file terpisah aja okeng
