@@ -233,7 +233,7 @@ def printPoint(Point) :
     # Contoh masukan : [2,3,4]
     # Keluaran : (2, 3, 4)
     # TODO : IMPLEMENT
-    return Point
+    print(Point)  # Placeholder, delete kalo udah ga kepake
 
 # 9. Cetak titik dari matriks
 def printPointMatrix(ListOfPoint) :
@@ -242,8 +242,9 @@ def printPointMatrix(ListOfPoint) :
     # (2, 3, 4),
     # (1, 7, 4),
     # (2, 11, -3)
+    # Gunakan printPoint jika diperlukan
     # TODO : IMPLEMENT
-    return ListOfPoint
+    print(ListOfPoint)  # Placeholder, delete kalo udah ga kepake
 
 # 10. Program Utama
 print("Selamat Datang di Program ClesestPair Points!")
@@ -252,7 +253,7 @@ print("Selamat Datang di Program ClesestPair Points!")
 print("Data titik seperti apa yang kamu pilih ?")
 print("1. Tiga dimensi")
 print("2. N dimensi")
-pilihan = int(input("Masukkan pilihanmu : "))
+pilihan = int(input("Masukkan pilihanmu (1/2) : "))
 
 # Validasi masukan
 while (pilihan != 1 and pilihan != 2):
@@ -260,40 +261,26 @@ while (pilihan != 1 and pilihan != 2):
     print("Data titik seperti apa yang kamu pilih ?")
     print("1. Tiga dimensi")
     print("2. N dimensi")
-    pilihan = int(input("Masukkan pilihanmu : "))
+    pilihan = int(input("Masukkan pilihanmu (1/2) : "))
     
 # Pemrosesan berdasarkan pilihan
-""" b = ListRandomPoint(3, 100)
-print("Daftar kumpulan titik")
-print(b)
-c = SortPoints(b)
-print(c)
-print("Euclidean distance 2 titik pertama")
-print(EuclideanDist3(b[0],b[1]))
-pt1, pt2, shortest = bruteForce(b)
-print(f'Dua titik terdekat yaitu {pt1} dan {pt2} menurut BruteForce dengan jarak {shortest}')
-shortestcln = ClosestPairPoint3(b, 100, 3)
-print(f'Dua titik terdekat yaitu menurut DnC dengan jarak {shortestcln}') """
-# visualizeMinimum(b)
-
-""" b = ListRandomPoint(2, 10)
-print("Daftar kumpulan titik")
-print(b)
-c = SortPoints(b)
-print(c)
-print("Euclidean distance 2 titik pertama")
-print(EuclideanDistGeneral(b[0],b[1],2))
-pt1, pt2, shortest = bruteForceDistGeneral(b, 2)
-print(f'Dua titik terdekat yaitu {pt1} dan {pt2} menurut BruteForce dengan jarak {shortest}')
-shortestcln = ClosestPairPoint3(b, 10)
-print(f'Dua titik terdekat yaitu menurut DnC dengan jarak {shortestcln}') """
-
-p = ListRandomPoint(3, 10)
-print("Daftar kumpulan titik")
-print(p)
-pts1, pts2, shortest1 = bruteForceDistGeneral(p, 3)
-print(f'Dua titik terdekat yaitu {pts1} dan {pts2} menurut BruteForce dengan jarak {shortest1}')
-pts3, pts4, shortestcln1 = ClosestPairPointGeneral(p, 10, 3)
-print(f'Dua titik terdekat yaitu {pts3} dan {pts4} menurut DnC dengan jarak {shortestcln1}')
-
-# Note : implement bonus ilustrasi dan generalized R^n point di file terpisah aja okeng
+if (pilihan == 1):
+    titik = int(input("Masukkan jumlah titik : "))
+    pointMatrix = ListRandomPoint(3, titik)
+    print("Daftar kumpulan titik")
+    printPointMatrix(pointMatrix)
+    pts1, pts2, shortest1 = bruteForceDist(pointMatrix)
+    print(f'Dua titik terdekat yaitu {pts1} dan {pts2} menurut BruteForce dengan jarak {shortest1}')
+    pts3, pts4, shortestcln1 = ClosestPairPoint3(pointMatrix, titik)
+    print(f'Dua titik terdekat yaitu {pts3} dan {pts4} menurut Divide and Conquer dengan jarak {shortestcln1}')
+    # TAMPILKAN GRAFIK
+else :
+    dimensi = int(input("Masukkan jumlah dimensi : "))
+    titik = int(input("Masukkan jumlah titik : "))
+    pointMatrix = ListRandomPoint(dimensi, titik)
+    print("Daftar kumpulan titik")
+    printPointMatrix(pointMatrix)
+    pts1, pts2, shortest1 = bruteForceDistGeneral(pointMatrix, dimensi)
+    print(f'Dua titik terdekat yaitu {pts1} dan {pts2} menurut BruteForce dengan jarak {shortest1}')
+    pts3, pts4, shortestcln1 = ClosestPairPointGeneral(pointMatrix, titik, dimensi)
+    print(f'Dua titik terdekat yaitu {pts3} dan {pts4} menurut Divide and Conquer dengan jarak {shortestcln1}')
