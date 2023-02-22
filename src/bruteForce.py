@@ -9,6 +9,5 @@ def bruteForce(listOfPoints) :
                 shortest = main.EuclideanDist3(listOfPoints[i], listOfPoints[j])
                 a = listOfPoints[i]
                 b = listOfPoints[j]
-
-    print(f'Dua titik terdekat yaitu {a} dan {b} dengan jarak {shortest}')
+                
     return shortest
