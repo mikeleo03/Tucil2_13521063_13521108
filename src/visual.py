@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import main
 
-
 def visualize(listOfPoints) :
     fig = plt.figure(figsize=(11,7))
     ax = fig.add_subplot(111, projection='3d')

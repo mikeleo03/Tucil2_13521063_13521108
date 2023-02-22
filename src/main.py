@@ -24,6 +24,7 @@ https://itzsyboo.medium.com/algorithms-studynote-4-divide-and-conquer-closest-pa
 import math
 import random
 import visual
+import matplotlib.pyplot as plt
 
 # 0.1. Random Point Generator
 def RandomPoint(dimention) :
@@ -80,14 +81,17 @@ def stripClosest(strip, size, d):
                 break
             if EuclideanDistGeneral(strip[i], strip[j], 2) < min_dist:
                 min_dist = EuclideanDistGeneral(strip[i], strip[j], 2)
+    
     return min_dist
 
 # 3. Implementasi rekursif cari kanan kiri
 def ClosestPairPoint3(listOfPoints, numbers) :
+    if numbers <= 3:
+        return bruteForceDistGeneral(listOfPoints, len(listOfPoints[0]))
     sorted = SortPoints(listOfPoints)
     midPoint = numbers // 2
-    midValue = sorted[midPoint]
     # Recursively find distance to left and right
+    print(sorted[0:midPoint])
     dist_left = ClosestPairPoint3(sorted[:midPoint], midPoint)
     dist_right = ClosestPairPoint3(sorted[midPoint:], numbers - midPoint)
     # minimum both
@@ -95,9 +99,10 @@ def ClosestPairPoint3(listOfPoints, numbers) :
     # defining strips
     strip = []
     for i in range(numbers):
-        if abs(sorted[i][0] - midValue[0]) < min:
+        if abs(sorted[i][0] - sorted[midPoint][0]) < min:
             strip.append(sorted[i])
-    return min(min, stripClosest(strip, len(strip), min))
+            
+    return minimum(min, stripClosest(strip, len(strip), min))
     
 # 5.1. Bruteforce 3 Points
 def bruteForce(listOfPoints) :
@@ -125,6 +130,25 @@ def bruteForceDistGeneral(listOfPoints, dimention) :
                 
     return a, b, shortest
 
+# Visualizing
+def visualizeMinimum(listOfPoints) :
+    fig = plt.figure(figsize=(11,7))
+    ax = fig.add_subplot(111, projection='3d')
+
+    for i in range (len(listOfPoints)) :
+        x = listOfPoints[i][0]
+        y = listOfPoints[i][1]
+        z = listOfPoints[i][2]
+
+        ax.scatter(x,y,z, color='black')
+    
+    point1, point2, dist = bruteForce(listOfPoints)
+
+    ax.scatter(point1[0],point1[1],point1[2], color='red')
+    ax.scatter(point2[0],point2[1],point2[2], color='red')
+
+    plt.show()
+
 # 5. Main program
 b = ListRandomPoint(3, 10)
 print("Daftar kumpulan titik")
@@ -135,7 +159,19 @@ print("Euclidean distance 2 titik pertama")
 print(EuclideanDist3(b[0],b[1]))
 pt1, pt2, shortest = bruteForce(b)
 print(f'Dua titik terdekat yaitu {pt1} dan {pt2} dengan jarak {shortest}')
-visual.visualize(b)
+visualizeMinimum(b)
+
+""" b = ListRandomPoint(2, 10)
+print("Daftar kumpulan titik")
+print(b)
+c = SortPoints(b)
+print(c)
+print("Euclidean distance 2 titik pertama")
+print(EuclideanDistGeneral(b[0],b[1],2))
+pt1, pt2, shortest = bruteForceDistGeneral(b, 2)
+print(f'Dua titik terdekat yaitu {pt1} dan {pt2} menurut BruteForce dengan jarak {shortest}')
+shortestcln = ClosestPairPoint3(b, 10)
+print(f'Dua titik terdekat yaitu menurut DnC dengan jarak {shortestcln}') """
 
 p = ListRandomPoint(5, 10)
 print("Daftar kumpulan titik")
