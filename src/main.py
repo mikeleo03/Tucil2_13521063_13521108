@@ -1,5 +1,6 @@
 # Implementasi Algoritma Utama
 # Importing modules
+import os
 import math
 import random
 import matplotlib.pyplot as plt
@@ -210,7 +211,7 @@ def visualize(listOfPoints) :
     plt.show()
 
 # 7.2. Visualisasi titik dalam bidang 3 Dimensi - Perjelas Minimum [BONUS]
-def visualizeMinimum(listOfPoints) :
+def visualizeMinimum(listOfPoints, point1, point2) :
     fig = plt.figure(figsize=(11,7))
     ax = fig.add_subplot(111, projection='3d')
 
@@ -220,8 +221,6 @@ def visualizeMinimum(listOfPoints) :
         z = listOfPoints[i][2]
 
         ax.scatter(x,y,z, color='black')
-    
-    point1, point2, dist = bruteForceDist(listOfPoints)
 
     ax.scatter(point1[0],point1[1],point1[2], color='red')
     ax.scatter(point2[0],point2[1],point2[2], color='red')
@@ -247,9 +246,11 @@ def printPointMatrix(ListOfPoint) :
     print(ListOfPoint)  # Placeholder, delete kalo udah ga kepake
 
 # 10. Program Utama
-print("Selamat Datang di Program ClesestPair Points!")
+os.system('cls') # Clear screen
+print("Selamat Datang di Program Closest-Pair Points Detector!\n")
 
 # Tampilan pilihan menu
+print("====================  INPUT  ====================")
 print("Data titik seperti apa yang kamu pilih ?")
 print("1. Tiga dimensi")
 print("2. N dimensi")
@@ -258,6 +259,7 @@ pilihan = int(input("Masukkan pilihanmu (1/2) : "))
 # Validasi masukan
 while (pilihan != 1 and pilihan != 2):
     print("Pilihan tidak valid, ulangi!")
+    print("-------------------------------------------------\n")
     print("Data titik seperti apa yang kamu pilih ?")
     print("1. Tiga dimensi")
     print("2. N dimensi")
@@ -265,22 +267,50 @@ while (pilihan != 1 and pilihan != 2):
     
 # Pemrosesan berdasarkan pilihan
 if (pilihan == 1):
+    print("\n=============  PASANGAN 3 DIMENSI  ==============")
     titik = int(input("Masukkan jumlah titik : "))
     pointMatrix = ListRandomPoint(3, titik)
+    print("\n===========  PEMBANGKITAN TITIK ACAK  ===========")
     print("Daftar kumpulan titik")
     printPointMatrix(pointMatrix)
+    print("\n===============  HASIL ALGORITMA  ===============")
     pts1, pts2, shortest1 = bruteForceDist(pointMatrix)
-    print(f'Dua titik terdekat yaitu {pts1} dan {pts2} menurut BruteForce dengan jarak {shortest1}')
+    print("Menurut Algoritma BruteForce --")
+    print(f'Dua titik terdekat yaitu {pts1} dan {pts2} dengan jarak {shortest1}')
     pts3, pts4, shortestcln1 = ClosestPairPoint3(pointMatrix, titik)
-    print(f'Dua titik terdekat yaitu {pts3} dan {pts4} menurut Divide and Conquer dengan jarak {shortestcln1}')
-    # TAMPILKAN GRAFIK
+    print("Menurut Algoritma Divide and Conquer --")
+    print(f'Dua titik terdekat yaitu {pts3} dan {pts4} dengan jarak {shortestcln1}')
+    
+    # Penampilan grafik
+    print("\n==============  PENAMPILAN GRAFIK  ==============")
+    print("Apakah ingin menampilkan hasil ilustrasi titik ?")
+    pilihan = input("Masukkan pilihanmu (Y/n) : ")
+    
+    # Validasi masukan
+    while (pilihan != "Y" and pilihan != "y" and pilihan != "N" and pilihan != "n"):
+        print("Pilihan tidak valid, ulangi!")
+        print("-------------------------------------------------\n")
+        print("Apakah ingin menampilkan hasil ilustrasi titik ?")
+        pilihan = input("Masukkan pilihanmu (Y/n) : ")
+        
+    # Pemrosesan masukan
+    if (pilihan == "Y" or pilihan == "y"):
+        print("\nPemrosesan sedang berlangsung....")
+        visualizeMinimum(pointMatrix, pts1, pts2)
+        print(" ")
+        
 else :
+    print("\n=============  PASANGAN N DIMENSI  ==============")
     dimensi = int(input("Masukkan jumlah dimensi : "))
     titik = int(input("Masukkan jumlah titik : "))
     pointMatrix = ListRandomPoint(dimensi, titik)
+    print("\n===========  PEMBANGKITAN TITIK ACAK  ===========")
     print("Daftar kumpulan titik")
     printPointMatrix(pointMatrix)
+    print("\n===============  HASIL ALGORITMA  ===============")
     pts1, pts2, shortest1 = bruteForceDistGeneral(pointMatrix, dimensi)
-    print(f'Dua titik terdekat yaitu {pts1} dan {pts2} menurut BruteForce dengan jarak {shortest1}')
+    print("Menurut Algoritma BruteForce --")
+    print(f'Dua titik terdekat yaitu {pts1} dan {pts2} dengan jarak {shortest1}')
     pts3, pts4, shortestcln1 = ClosestPairPointGeneral(pointMatrix, titik, dimensi)
-    print(f'Dua titik terdekat yaitu {pts3} dan {pts4} menurut Divide and Conquer dengan jarak {shortestcln1}')
+    print("Menurut Algoritma Divide and Conquer --")
+    print(f'Dua titik terdekat yaitu {pts3} dan {pts4} dengan jarak {shortestcln1}\n')
