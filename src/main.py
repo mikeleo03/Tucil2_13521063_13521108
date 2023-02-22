@@ -20,22 +20,37 @@ https://blog.devgenius.io/closest-pair-of-points-on-a-plane-divide-and-conquer-e
 https://itzsyboo.medium.com/algorithms-studynote-4-divide-and-conquer-closest-pair-49ba679ce3c7
 
 '''
-# 0.1. Random Point generator
+# Importing modules
+import math
+import random
+
+# 0.1. Random Point Generator
+def RandomPoint(dimention) :
+    return [random.randint(-2, 2) for i in range (dimention)]
 
 # 0.2. List of Random Point Generator
+def ListRandomPoint(dimention, numbers) :
+    return [RandomPoint(dimention) for i in range (numbers)]
 
-# 1. Membandingkan nilai x
+# 1. Persamaan Euclidean distance (3 dimensi)
+def EuclideanDist3(point1, point2) :
+    # Persamaan : sqrt((x1-x2)^2 + (y1-y2)^2 + (z1-z2)^2)
+    xdist = pow(point1[0] - point2[0], 2)
+    ydist = pow(point1[1] - point2[1], 2)
+    zdist = pow(point1[2] - point2[2], 2)
+    return math.sqrt(xdist + ydist + zdist)
 
-# 2. Membandingkan nilai y
+# 2. Jarak terdekat ke tengah lintas titik
 
-# 3. Persamaan Euclidean distance (3 dimensi)
+# 3. Implementasi rekursif cari kanan kiri
 
-# 4. Jarak terdekat ke tengah lintas titik
+# 4. Definisi terdekat
 
-# 5. Implementasi rekursif cari kanan kiri
-
-# 6. Definisi terdekat
-
-# 7. Main program
+# 5. Main program
+b = ListRandomPoint(3, 10)
+print("Daftar kumpulan titik")
+print(b)
+print("Euclidean distance 2 titik pertama")
+print(EuclideanDist3(b[0],b[1]))
 
 # Note : implement bonus ilustrasi dan generalized R^n point di file terpisah aja okeng
