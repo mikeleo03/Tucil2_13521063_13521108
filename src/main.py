@@ -57,11 +57,19 @@ def EuclideanDistGeneral(point1, point2, dimention) :
 
 # 2. Jarak terdekat ke tengah lintas titik
 
+# . Sorting points in x order
+def SortPoints(listOfPoints) :
+    listOfPoints.sort(key = lambda x : x[0])
+    return listOfPoints
+
 # 3. Implementasi rekursif cari kanan kiri
+def ClosestPairPoint3(listOfPoints, numbers) :
+    midPoint = numbers // 2
+    midValue = listOfPoints[midPoint]
 
 # 4. Definisi terdekat
 
-# 5. Bruteforce 3 Points
+# 5.1. Bruteforce 3 Points
 def bruteForce(listOfPoints) :
     shortest = EuclideanDist3(listOfPoints[0], listOfPoints[1])
 
@@ -74,10 +82,25 @@ def bruteForce(listOfPoints) :
                 
     return a, b, shortest
 
+# 5.2. Generalized bruteFirce
+def bruteForceDistGeneral(listOfPoints, dimention) :
+    shortest = EuclideanDistGeneral(listOfPoints[0], listOfPoints[1], dimention)
+
+    for i in range (len(listOfPoints)) :
+        for j in range(len(listOfPoints)) :
+            if (i != j) and (EuclideanDistGeneral(listOfPoints[i], listOfPoints[j], dimention) <= shortest):
+                shortest = EuclideanDistGeneral(listOfPoints[i], listOfPoints[j], dimention)
+                a = listOfPoints[i]
+                b = listOfPoints[j]
+                
+    return a, b, shortest
+
 # 5. Main program
-b = ListRandomPoint(3, 3)
+b = ListRandomPoint(3, 10)
 print("Daftar kumpulan titik")
 print(b)
+c = SortPoints(b)
+print(c)
 print("Euclidean distance 2 titik pertama")
 print(EuclideanDist3(b[0],b[1]))
 pt1, pt2, shortest = bruteForce(b)
@@ -88,5 +111,7 @@ print("Daftar kumpulan titik")
 print(p)
 print("Euclidean distance 2 titik pertama")
 print(EuclideanDistGeneral(p[0],p[1],5))
+pts1, pts2, shortest1 = bruteForceDistGeneral(p, 5)
+print(f'Dua titik terdekat yaitu {pts1} dan {pts2} dengan jarak {shortest1}')
 
 # Note : implement bonus ilustrasi dan generalized R^n point di file terpisah aja okeng
