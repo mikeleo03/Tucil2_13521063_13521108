@@ -23,6 +23,7 @@ https://itzsyboo.medium.com/algorithms-studynote-4-divide-and-conquer-closest-pa
 # Importing modules
 import math
 import random
+import visual
 
 # 0.1. Random Point Generator
 def RandomPoint(dimention) :
@@ -62,13 +63,42 @@ def SortPoints(listOfPoints) :
     listOfPoints.sort(key = lambda x : x[0])
     return listOfPoints
 
+# 4. Definisi terdekat
+def minimum(x, y):
+    if (x > y) :
+        return y
+    else :
+        return x
+
+def stripClosest(strip, size, d):
+    min_dist = d
+    strip = sorted(strip, key=lambda point: point.y)
+ 
+    for i in range(size):
+        for j in range(i+1, size):
+            if (strip[j].y - strip[i].y) >= min_dist:
+                break
+            if EuclideanDistGeneral(strip[i], strip[j], 2) < min_dist:
+                min_dist = EuclideanDistGeneral(strip[i], strip[j], 2)
+    return min_dist
+
 # 3. Implementasi rekursif cari kanan kiri
 def ClosestPairPoint3(listOfPoints, numbers) :
+    sorted = SortPoints(listOfPoints)
     midPoint = numbers // 2
-    midValue = listOfPoints[midPoint]
-
-# 4. Definisi terdekat
-
+    midValue = sorted[midPoint]
+    # Recursively find distance to left and right
+    dist_left = ClosestPairPoint3(sorted[:midPoint], midPoint)
+    dist_right = ClosestPairPoint3(sorted[midPoint:], numbers - midPoint)
+    # minimum both
+    min = minimum(dist_left, dist_right)
+    # defining strips
+    strip = []
+    for i in range(numbers):
+        if abs(sorted[i][0] - midValue[0]) < min:
+            strip.append(sorted[i])
+    return min(min, stripClosest(strip, len(strip), min))
+    
 # 5.1. Bruteforce 3 Points
 def bruteForce(listOfPoints) :
     shortest = EuclideanDist3(listOfPoints[0], listOfPoints[1])
@@ -105,6 +135,7 @@ print("Euclidean distance 2 titik pertama")
 print(EuclideanDist3(b[0],b[1]))
 pt1, pt2, shortest = bruteForce(b)
 print(f'Dua titik terdekat yaitu {pt1} dan {pt2} dengan jarak {shortest}')
+visual.visualize(b)
 
 p = ListRandomPoint(5, 10)
 print("Daftar kumpulan titik")
