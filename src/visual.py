@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-import main
+# import main
 
 def visualize(listOfPoints) :
     fig = plt.figure(figsize=(11,7))

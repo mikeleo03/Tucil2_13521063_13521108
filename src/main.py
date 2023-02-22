@@ -61,7 +61,7 @@ def EuclideanDistGeneral(point1, point2, dimention) :
 
 # . Sorting points in x order
 def SortPoints(listOfPoints) :
-    listOfPoints.sort(key = lambda x : x[0])
+    listOfPoints.sort(key = lambda point : point[0])
     return listOfPoints
 
 # 4. Definisi terdekat
@@ -71,29 +71,30 @@ def minimum(x, y):
     else :
         return x
 
-def stripClosest(strip, size, d):
-    min_dist = d
-    strip = sorted(strip, key=lambda point: point.y)
+def stripClosest(strip, size, minimum, dimention):
+    min_dist = minimum
+    strip = sorted(strip, key=lambda point: point[1])
  
     for i in range(size):
         for j in range(i+1, size):
-            if (strip[j].y - strip[i].y) >= min_dist:
+            if (strip[j][1] - strip[i][1]) >= min_dist:
                 break
-            if EuclideanDistGeneral(strip[i], strip[j], 2) < min_dist:
-                min_dist = EuclideanDistGeneral(strip[i], strip[j], 2)
+            if EuclideanDistGeneral(strip[i], strip[j], dimention) < min_dist:
+                min_dist = EuclideanDistGeneral(strip[i], strip[j], dimention)
     
     return min_dist
 
 # 3. Implementasi rekursif cari kanan kiri
-def ClosestPairPoint3(listOfPoints, numbers) :
+def ClosestPairPoint3(listOfPoints, numbers, dimention) :
     if numbers <= 3:
-        return bruteForceDistGeneral(listOfPoints, len(listOfPoints[0]))
+        a, b, dist = bruteForceDistGeneral(listOfPoints, dimention)
+        return dist
+    
     sorted = SortPoints(listOfPoints)
     midPoint = numbers // 2
     # Recursively find distance to left and right
-    print(sorted[0:midPoint])
-    dist_left = ClosestPairPoint3(sorted[:midPoint], midPoint)
-    dist_right = ClosestPairPoint3(sorted[midPoint:], numbers - midPoint)
+    dist_left = ClosestPairPoint3(sorted[:midPoint], midPoint, dimention)
+    dist_right = ClosestPairPoint3(sorted[midPoint:], numbers - midPoint, dimention)
     # minimum both
     min = minimum(dist_left, dist_right)
     # defining strips
@@ -102,7 +103,7 @@ def ClosestPairPoint3(listOfPoints, numbers) :
         if abs(sorted[i][0] - sorted[midPoint][0]) < min:
             strip.append(sorted[i])
             
-    return minimum(min, stripClosest(strip, len(strip), min))
+    return minimum(min, stripClosest(strip, len(strip), min, dimention))
     
 # 5.1. Bruteforce 3 Points
 def bruteForce(listOfPoints) :
@@ -159,7 +160,9 @@ print("Euclidean distance 2 titik pertama")
 print(EuclideanDist3(b[0],b[1]))
 pt1, pt2, shortest = bruteForce(b)
 print(f'Dua titik terdekat yaitu {pt1} dan {pt2} dengan jarak {shortest}')
-visualizeMinimum(b)
+shortestcln = ClosestPairPoint3(b, 10, 3)
+print(f'Dua titik terdekat yaitu menurut DnC dengan jarak {shortestcln}')
+# visualizeMinimum(b)
 
 """ b = ListRandomPoint(2, 10)
 print("Daftar kumpulan titik")
@@ -180,5 +183,7 @@ print("Euclidean distance 2 titik pertama")
 print(EuclideanDistGeneral(p[0],p[1],5))
 pts1, pts2, shortest1 = bruteForceDistGeneral(p, 5)
 print(f'Dua titik terdekat yaitu {pts1} dan {pts2} dengan jarak {shortest1}')
+shortestcln1 = ClosestPairPoint3(b, 10, 5)
+print(f'Dua titik terdekat yaitu menurut DnC dengan jarak {shortestcln1}')
 
 # Note : implement bonus ilustrasi dan generalized R^n point di file terpisah aja okeng
