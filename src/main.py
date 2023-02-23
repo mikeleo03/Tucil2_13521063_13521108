@@ -232,7 +232,7 @@ def printPoint(Point) :
     # Contoh masukan : [2,3,4]
     # Keluaran : (2, 3, 4)
     # TODO : IMPLEMENT
-    print(Point)  # Placeholder, delete kalo udah ga kepake
+    print(f'({Point[0]}, {Point[1]}, {Point[2]})')
 
 # 9. Cetak titik dari matriks
 def printPointMatrix(ListOfPoint) :
@@ -243,7 +243,13 @@ def printPointMatrix(ListOfPoint) :
     # (2, 11, -3)
     # Gunakan printPoint jika diperlukan
     # TODO : IMPLEMENT
-    print(ListOfPoint)  # Placeholder, delete kalo udah ga kepake
+    
+    for i in range(len(ListOfPoint)) :
+        printPoint(ListOfPoint[i])
+        if i != len(ListOfPoint) :
+            print(',')
+            print('\n')
+        print('\n')
 
 # 10. Program Utama
 os.system('cls') # Clear screen
