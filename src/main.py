@@ -301,10 +301,23 @@ def printPointMatrixFile(ListOfPoint, f) :
 
 # 10. Program Utama
 os.system('cls') # Clear screen
-print("Selamat Datang di Program Closest-Pair Points Detector!\n")
+print('''
+                 = Tugas Kecil 2 Strategi Algoritma  =                                                
+   _|_|_|  _|                                            _|      
+ _|        _|    _|_|      _|_|_|    _|_|      _|_|_|  _|_|_|_|  
+ _|        _|  _|    _|  _|_|      _|_|_|_|  _|_|        _|      
+ _|        _|  _|    _|      _|_|  _|            _|_|    _|      
+   _|_|_|  _|    _|_|    _|_|_|      _|_|_|  _|_|_|        _|_|  
+                                                                                                 
+ _|_|_|              _|              Points Detector -
+ _|    _|    _|_|_|      _|  _|_|    Divide and Conquer Algorithm
+ _|_|_|    _|    _|  _|  _|_|           
+ _|        _|    _|  _|  _|          Made by :
+ _|          _|_|_|  _|  _|          13521063 / 13521108
+      ''')
 
 # Tampilan pilihan menu
-print("====================  INPUT  ====================")
+print("============================  INPUT  ============================")
 print("Data titik seperti apa yang kamu pilih ?")
 print("1. Tiga dimensi")
 print("2. N dimensi")
@@ -314,7 +327,7 @@ pilihan = int(input("> "))
 # Validasi masukan
 while (pilihan != 1 and pilihan != 2):
     print("Pilihan tidak valid, ulangi!")
-    print("-------------------------------------------------\n")
+    print("-----------------------------------------------------------------\n")
     print("Data titik seperti apa yang kamu pilih ?")
     print("1. Tiga dimensi")
     print("2. N dimensi")
@@ -323,16 +336,16 @@ while (pilihan != 1 and pilihan != 2):
     
 # Pemrosesan berdasarkan pilihan
 if (pilihan == 1):
-    print("\n=============  PASANGAN 3 DIMENSI  ==============")
+    print("\n=====================  PASANGAN 3 DIMENSI  ======================")
     print("Masukkan jumlah titik")
     titik = int(input("> "))
     pointMatrix = ListRandomPoint(3, titik)
     
-    print("\n===========  PEMBANGKITAN TITIK ACAK  ===========")
+    print("\n===================  PEMBANGKITAN TITIK ACAK  ===================")
     print("Daftar kumpulan titik")
     
-    # Case handling untuk masukan diatas 100
-    if titik <= 100 :
+    # Case handling untuk masukan diatas 50
+    if titik <= 50 :
         printPointMatrix(pointMatrix)
         print("")
     else :
@@ -341,7 +354,7 @@ if (pilihan == 1):
             print('Daftar titik yang dibangkitkan :\n', file=f)
             printPointMatrixFile(pointMatrix, f)
             
-    print("\n===============  HASIL ALGORITMA  ===============")
+    print("\n=======================  HASIL ALGORITMA  =======================")
     start_bf = time.time()
     pts1, pts2, shortest1, compare1 = bruteForceDist(pointMatrix)
     finish_bf = time.time()
@@ -361,7 +374,7 @@ if (pilihan == 1):
     printPoint(pts4) 
     print(f"\nJarak                   : {shortestcln1}")
     
-    print("\n==================  STATISTIK  ==================")
+    print("\n==========================  STATISTIK  ==========================")
     print("Algoritma BruteForce --")
     print(f'Jumlah perbandingan : {compare1}')
     print(f'Waktu Eksekusi      : {finish_bf - start_bf} sekon\n')
@@ -370,7 +383,7 @@ if (pilihan == 1):
     print(f'Waktu Eksekusi      : {finish_dc - start_dc} sekon')
     
     # Penampilan grafik
-    print("\n==============  PENAMPILAN GRAFIK  ==============")
+    print("\n======================  PENAMPILAN GRAFIK  ======================")
     print("Apakah ingin menampilkan hasil ilustrasi titik ?")
     print("Masukkan pilihanmu [Y/n]")
     pilihan = input("> ")
@@ -378,7 +391,7 @@ if (pilihan == 1):
     # Validasi masukan
     while (pilihan != "Y" and pilihan != "y" and pilihan != "N" and pilihan != "n"):
         print("Pilihan tidak valid, ulangi!")
-        print("-------------------------------------------------\n")
+        print("-----------------------------------------------------------------\n")
         print("Apakah ingin menampilkan hasil ilustrasi titik ?")
         print("Masukkan pilihanmu [Y/n]")
         pilihan = input("> ")
@@ -392,18 +405,18 @@ if (pilihan == 1):
         print(" ")
         
 else :
-    print("\n=============  PASANGAN N DIMENSI  ==============")
+    print("\n=====================  PASANGAN N DIMENSI  ======================")
     print("Masukkan jumlah dimensi")
     dimensi = int(input("> "))
     print("Masukkan jumlah titik")
     titik = int(input("> "))
     pointMatrix = ListRandomPoint(dimensi, titik)
     
-    print("\n===========  PEMBANGKITAN TITIK ACAK  ===========")
+    print("\n===================  PEMBANGKITAN TITIK ACAK  ===================")
     print("Daftar kumpulan titik")
     
-    # Case handling untuk masukan diatas 100
-    if titik <= 100 :
+    # Case handling untuk masukan diatas 50
+    if titik <= 50 :
         printPointMatrix(pointMatrix)
         print("")
     else :
@@ -412,7 +425,7 @@ else :
             print('Daftar titik yang dibangkitkan :\n', file=f)
             printPointMatrixFile(pointMatrix, f)
             
-    print("\n===============  HASIL ALGORITMA  ===============")
+    print("\n=======================  HASIL ALGORITMA  =======================")
     start_bf = time.time()
     pts1, pts2, shortest1, compare1 = bruteForceDistGeneral(pointMatrix, dimensi)
     finish_bf = time.time()
@@ -432,7 +445,7 @@ else :
     printPoint(pts4) 
     print(f"\nJarak                   : {shortestcln1}")
     
-    print("\n==================  STATISTIK  ==================")
+    print("\n==========================  STATISTIK  ==========================")
     print("Algoritma BruteForce --")
     print(f'Jumlah perbandingan : {compare1}')
     print(f'Waktu Eksekusi      : {finish_bf - start_bf} sekon\n')
