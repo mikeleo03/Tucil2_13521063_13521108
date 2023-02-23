@@ -243,13 +243,11 @@ def printPointMatrix(ListOfPoint) :
     # (2, 11, -3)
     # Gunakan printPoint jika diperlukan
     # TODO : IMPLEMENT
-    
-    for i in range(len(ListOfPoint)) :
-        printPoint(ListOfPoint[i])
-        if i != len(ListOfPoint) :
-            print(',')
-            print('\n')
-        print('\n')
+    n = len(ListOfPoint) - 1
+    for i in range(len(ListOfPoint) - 1) :
+        print(f'({ListOfPoint[i][0]}, {ListOfPoint[i][1]}, {ListOfPoint[i][2]}),')
+    print(f'({ListOfPoint[n][0]}, {ListOfPoint[n][1]}, {ListOfPoint[n][2]})')
+        
 
 # 10. Program Utama
 os.system('cls') # Clear screen
