@@ -1,7 +1,6 @@
 # Implementasi Algoritma Utama
-# Importing modules
+# Impor modul eksternal
 import os
-import sys
 import math
 import random
 import time
@@ -44,14 +43,14 @@ def SortPoints(listOfPoints) :
     return listOfPoints
 
 # 3. Definisi nilai minimum dari 2 nilai masukan
-def minimum(x, y):
+def Minimum(x, y):
     if (x > y) :
         return y
     else :
         return x
 
 # 4. Pencarian titik terdekat yang berada di tengah dengan batas toleransi delta
-def lineCenterClosest(lineCenter, size, minimum, am, bm, dimention):
+def LineCenterClosest(lineCenter, size, minimum, am, bm, dimention):
     # Pendefinisian nilai dari parameter, sebagai handler kalau nilainya sama
     min_dist = minimum
     min_p1 = am
@@ -82,7 +81,7 @@ def lineCenterClosest(lineCenter, size, minimum, am, bm, dimention):
 def ClosestPairPoint3(listOfPoints, numbers) :
     # Kondisi pemberhenti rekursifitas, saat jumlah elemen partisi sudah terbatas
     if numbers <= 3:
-        a, b, dist, count = bruteForceDist(listOfPoints)
+        a, b, dist, count = BruteForceDist(listOfPoints)
         # Mengembalikan 2 titik dan nilai jaraknya
         return a, b, dist, count
     
@@ -97,7 +96,7 @@ def ClosestPairPoint3(listOfPoints, numbers) :
     a2, b2, dist_right, count2 = ClosestPairPoint3(sorted[midPoint:], numbers - midPoint)
     
     # Mengambil nilai minimum dari jarak terdekat bagian kanan dan kiri serta titiknya
-    min = minimum(dist_left, dist_right)
+    min = Minimum(dist_left, dist_right)
     if (min == dist_left) :
         am = a1
         bm = b1
@@ -112,10 +111,10 @@ def ClosestPairPoint3(listOfPoints, numbers) :
             lineCenter.append(sorted[i])
     
     # Mengambil nilai terkecuil disekitar lineCenter
-    p1, p2, val, count3 = lineCenterClosest(lineCenter, len(lineCenter), min, am, bm, 3)
+    p1, p2, val, count3 = LineCenterClosest(lineCenter, len(lineCenter), min, am, bm, 3)
     
     # Membandingkan nilai sekitar lineCenter dengan nilai minimum partisi dan ambil titiknya
-    min_pol = minimum(min, val)
+    min_pol = Minimum(min, val)
     if (min_pol == min) :
         a_min = am
         b_min = bm
@@ -132,7 +131,7 @@ def ClosestPairPoint3(listOfPoints, numbers) :
 def ClosestPairPointGeneral(listOfPoints, numbers, dimention) :
     # Kondisi pemberhenti rekursifitas, saat jumlah elemen partisi sudah terbatas
     if numbers <= 3:
-        a, b, dist, count = bruteForceDistGeneral(listOfPoints, dimention)
+        a, b, dist, count = BruteForceDistGeneral(listOfPoints, dimention)
         # Mengembalikan 2 titik dan nilai jaraknya
         return a, b, dist, count
     
@@ -147,7 +146,7 @@ def ClosestPairPointGeneral(listOfPoints, numbers, dimention) :
     a2, b2, dist_right, count2 = ClosestPairPointGeneral(sorted[midPoint:], numbers - midPoint, dimention)
     
     # Mengambil nilai minimum dari jarak terdekat bagian kanan dan kiri serta titiknya
-    min = minimum(dist_left, dist_right)
+    min = Minimum(dist_left, dist_right)
     if (min == dist_left) :
         am = a1
         bm = b1
@@ -162,10 +161,10 @@ def ClosestPairPointGeneral(listOfPoints, numbers, dimention) :
             lineCenter.append(sorted[i])
     
     # Mengambil nilai terkecuil disekitar lineCenter
-    p1, p2, val, count3 = lineCenterClosest(lineCenter, len(lineCenter), min, am, bm, dimention)
+    p1, p2, val, count3 = LineCenterClosest(lineCenter, len(lineCenter), min, am, bm, dimention)
     
     # Membandingkan nilai sekitar lineCenter dengan nilai minimum partisi dan ambil titiknya
-    min_pol = minimum(min, val)
+    min_pol = Minimum(min, val)
     if (min_pol == min) :
         a_min = am
         b_min = bm
@@ -179,7 +178,7 @@ def ClosestPairPointGeneral(listOfPoints, numbers, dimention) :
     return a_min, b_min, min_pol, count_total
     
 # 6.1. Implementasi Strategi Bruteforce untuk titik 3 dimensi
-def bruteForceDist(listOfPoints) :
+def BruteForceDist(listOfPoints) :
     compare = 0  # Inisiasi jumlah perbandingan yang dilakukan
     shortest = EuclideanDist3(listOfPoints[0], listOfPoints[1])
 
@@ -195,7 +194,7 @@ def bruteForceDist(listOfPoints) :
     return a, b, shortest, compare
 
 # 6.2. Implementasi Strategi Bruteforce untuk dimensi tergeneralisasi [BONUS]
-def bruteForceDistGeneral(listOfPoints, dimention) :
+def BruteForceDistGeneral(listOfPoints, dimention) :
     compare = 0  # Inisiasi jumlah perbandingan yang dilakukan
     shortest = EuclideanDistGeneral(listOfPoints[0], listOfPoints[1], dimention)
 
@@ -211,7 +210,7 @@ def bruteForceDistGeneral(listOfPoints, dimention) :
     return a, b, shortest, compare
 
 # 7.1. Visualisasi titik dalam bidang 3 Dimensi - Normal
-def visualize(listOfPoints) :
+def Visualize(listOfPoints) :
     fig = plt.figure(figsize=(11,7))
     ax = fig.add_subplot(111, projection='3d')
 
@@ -225,7 +224,7 @@ def visualize(listOfPoints) :
     plt.show()
 
 # 7.2. Visualisasi titik dalam bidang 3 Dimensi - Perjelas Minimum [BONUS]
-def visualizeMinimum(listOfPoints, point1, point2) :
+def VisualizeMinimum(listOfPoints, point1, point2) :
     fig = plt.figure(figsize=(11,7))
     ax = fig.add_subplot(111, projection='3d')
 
@@ -322,7 +321,7 @@ print("Data titik seperti apa yang kamu pilih ?")
 print("1. Tiga dimensi")
 print("2. N dimensi")
 print("Masukkan pilihanmu [1/2]")
-pilihan = int(input("> "))
+pilihan = int(input(">> "))
 
 # Validasi masukan
 while (pilihan != 1 and pilihan != 2):
@@ -332,13 +331,13 @@ while (pilihan != 1 and pilihan != 2):
     print("1. Tiga dimensi")
     print("2. N dimensi")
     print("Masukkan pilihanmu [1/2]")
-    pilihan = int(input("> "))
+    pilihan = int(input(">> "))
     
 # Pemrosesan berdasarkan pilihan
 if (pilihan == 1):
     print("\n=====================  PASANGAN 3 DIMENSI  ======================")
     print("Masukkan jumlah titik")
-    titik = int(input("> "))
+    titik = int(input(">> "))
     pointMatrix = ListRandomPoint(3, titik)
     
     print("\n===================  PEMBANGKITAN TITIK ACAK  ===================")
@@ -356,7 +355,7 @@ if (pilihan == 1):
             
     print("\n=======================  HASIL ALGORITMA  =======================")
     start_bf = time.time()
-    pts1, pts2, shortest1, compare1 = bruteForceDist(pointMatrix)
+    pts1, pts2, shortest1, compare1 = BruteForceDist(pointMatrix)
     finish_bf = time.time()
     start_dc = time.time()
     pts3, pts4, shortestcln1, compare2 = ClosestPairPoint3(pointMatrix, titik)
@@ -386,7 +385,7 @@ if (pilihan == 1):
     print("\n======================  PENAMPILAN GRAFIK  ======================")
     print("Apakah ingin menampilkan hasil ilustrasi titik ?")
     print("Masukkan pilihanmu [Y/n]")
-    pilihan = input("> ")
+    pilihan = input(">> ")
     
     # Validasi masukan
     while (pilihan != "Y" and pilihan != "y" and pilihan != "N" and pilihan != "n"):
@@ -394,12 +393,12 @@ if (pilihan == 1):
         print("-----------------------------------------------------------------\n")
         print("Apakah ingin menampilkan hasil ilustrasi titik ?")
         print("Masukkan pilihanmu [Y/n]")
-        pilihan = input("> ")
+        pilihan = input(">> ")
         
     # Pemrosesan masukan
     if (pilihan == "Y" or pilihan == "y"):
         print("\nPemrosesan sedang berlangsung....")
-        visualizeMinimum(pointMatrix, pts1, pts2)
+        VisualizeMinimum(pointMatrix, pts1, pts2)
         print(" ")
     else :
         print(" ")
@@ -407,9 +406,9 @@ if (pilihan == 1):
 else :
     print("\n=====================  PASANGAN N DIMENSI  ======================")
     print("Masukkan jumlah dimensi")
-    dimensi = int(input("> "))
+    dimensi = int(input(">> "))
     print("Masukkan jumlah titik")
-    titik = int(input("> "))
+    titik = int(input(">> "))
     pointMatrix = ListRandomPoint(dimensi, titik)
     
     print("\n===================  PEMBANGKITAN TITIK ACAK  ===================")
@@ -427,7 +426,7 @@ else :
             
     print("\n=======================  HASIL ALGORITMA  =======================")
     start_bf = time.time()
-    pts1, pts2, shortest1, compare1 = bruteForceDistGeneral(pointMatrix, dimensi)
+    pts1, pts2, shortest1, compare1 = BruteForceDistGeneral(pointMatrix, dimensi)
     finish_bf = time.time()
     start_dc = time.time()
     pts3, pts4, shortestcln1, compare2 = ClosestPairPointGeneral(pointMatrix, titik, dimensi)
