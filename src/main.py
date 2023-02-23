@@ -229,24 +229,32 @@ def visualizeMinimum(listOfPoints, point1, point2) :
 
 # 8. Cetak titik dalam bentuk kurung
 def printPoint(Point) :
-    # Contoh masukan : [2,3,4]
-    # Keluaran : (2, 3, 4)
-    # TODO : IMPLEMENT
-    print(f'({Point[0]}, {Point[1]}, {Point[2]})')
+    n = len(Point) - 1
+    a = "("
+    for i in range (len(Point) - 1) :
+        a += str(Point[i])
+        a += ", "
+    a += str(Point[n])
+    a += ")"
+    print(a)
 
 # 9. Cetak titik dari matriks
 def printPointMatrix(ListOfPoint) :
-    # Contoh masukan : [[2,3,4], [1,7,4], [2,11,-3]]
-    # Keluaran : 
-    # (2, 3, 4),
-    # (1, 7, 4),
-    # (2, 11, -3)
-    # Gunakan printPoint jika diperlukan
-    # TODO : IMPLEMENT
-    n = len(ListOfPoint) - 1
-    for i in range(len(ListOfPoint) - 1) :
-        print(f'({ListOfPoint[i][0]}, {ListOfPoint[i][1]}, {ListOfPoint[i][2]}),')
-    print(f'({ListOfPoint[n][0]}, {ListOfPoint[n][1]}, {ListOfPoint[n][2]})')
+    long = len(ListOfPoint) - 1
+    
+    for i in range (long) :
+        n = len(ListOfPoint[i]) - 1
+        a = "("
+
+        for j in range (len(ListOfPoint[i]) - 1) :
+            a += str(ListOfPoint[i][j])
+            a += ", "
+        a += str(ListOfPoint[i][n])
+        a += "),"
+
+        print(a)
+    
+    printPoint(ListOfPoint[long])
         
 
 # 10. Program Utama
