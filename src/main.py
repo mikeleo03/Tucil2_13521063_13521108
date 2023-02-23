@@ -4,6 +4,7 @@ import os
 import sys
 import math
 import random
+import time
 import matplotlib.pyplot as plt
 
 # 0.1. Pembangkit titik koordinat acak
@@ -60,8 +61,10 @@ def lineCenterClosest(lineCenter, size, minimum, am, bm, dimention):
     lineCenter = sorted(lineCenter, key=lambda point: point[1])
 
     # Melakukan pengujian jarak terdekat dari titik disekitar pusat dalam batas toleransi
+    count = 0
     for i in range(size):
         for j in range(i+1, size):
+            count += 1
             # Kalau ukurannya lebih besar dari delta, lewati
             if (lineCenter[j][1] - lineCenter[i][1]) >= min_dist:
                 break
@@ -73,15 +76,15 @@ def lineCenterClosest(lineCenter, size, minimum, am, bm, dimention):
                 min_p2 = lineCenter[j]
     
     # Pengembalian dua titik terdekat dalam batas lineCenter dan jaraknya
-    return min_p1, min_p2, min_dist
+    return min_p1, min_p2, min_dist, count
 
 # 5.1. Implementasi rekursif cari kanan kiri (3 dimensi)
 def ClosestPairPoint3(listOfPoints, numbers) :
     # Kondisi pemberhenti rekursifitas, saat jumlah elemen partisi sudah terbatas
     if numbers <= 3:
-        a, b, dist = bruteForceDist(listOfPoints)
+        a, b, dist, count = bruteForceDist(listOfPoints)
         # Mengembalikan 2 titik dan nilai jaraknya
-        return a, b, dist
+        return a, b, dist, count
     
     # Sebelum melakukan pemrosesan, titik diurutkan menaik menggunakan fungsi sortPoints
     sorted = SortPoints(listOfPoints)
@@ -90,8 +93,8 @@ def ClosestPairPoint3(listOfPoints, numbers) :
     midPoint = numbers // 2
     
     # Mencari titik dengan jarak terdekat di kanan dan kiri lineCenter secara rekursif
-    a1, b1, dist_left = ClosestPairPoint3(sorted[:midPoint], midPoint)
-    a2, b2, dist_right = ClosestPairPoint3(sorted[midPoint:], numbers - midPoint)
+    a1, b1, dist_left, count1 = ClosestPairPoint3(sorted[:midPoint], midPoint)
+    a2, b2, dist_right, count2 = ClosestPairPoint3(sorted[midPoint:], numbers - midPoint)
     
     # Mengambil nilai minimum dari jarak terdekat bagian kanan dan kiri serta titiknya
     min = minimum(dist_left, dist_right)
@@ -109,7 +112,7 @@ def ClosestPairPoint3(listOfPoints, numbers) :
             lineCenter.append(sorted[i])
     
     # Mengambil nilai terkecuil disekitar lineCenter
-    p1, p2, val = lineCenterClosest(lineCenter, len(lineCenter), min, am, bm, 3)
+    p1, p2, val, count3 = lineCenterClosest(lineCenter, len(lineCenter), min, am, bm, 3)
     
     # Membandingkan nilai sekitar lineCenter dengan nilai minimum partisi dan ambil titiknya
     min_pol = minimum(min, val)
@@ -119,17 +122,19 @@ def ClosestPairPoint3(listOfPoints, numbers) :
     else :
         a_min = p1
         b_min = p2
+        
+    count_total = count1 + count2 + count3
     
     # mengembalikan hasil final, yaitu kedua titik dengan jarak terdekat dan jaraknya
-    return a_min, b_min, min_pol
+    return a_min, b_min, min_pol, count_total
 
 # 5.2. Implementasi rekursif cari kanan kiri (Tergeneralisasi) [BONUS]
 def ClosestPairPointGeneral(listOfPoints, numbers, dimention) :
     # Kondisi pemberhenti rekursifitas, saat jumlah elemen partisi sudah terbatas
     if numbers <= 3:
-        a, b, dist = bruteForceDistGeneral(listOfPoints, dimention)
+        a, b, dist, count = bruteForceDistGeneral(listOfPoints, dimention)
         # Mengembalikan 2 titik dan nilai jaraknya
-        return a, b, dist
+        return a, b, dist, count
     
     # Sebelum melakukan pemrosesan, titik diurutkan menaik menggunakan fungsi sortPoints
     sorted = SortPoints(listOfPoints)
@@ -138,8 +143,8 @@ def ClosestPairPointGeneral(listOfPoints, numbers, dimention) :
     midPoint = numbers // 2
     
     # Mencari titik dengan jarak terdekat di kanan dan kiri lineCenter secara rekursif
-    a1, b1, dist_left = ClosestPairPointGeneral(sorted[:midPoint], midPoint, dimention)
-    a2, b2, dist_right = ClosestPairPointGeneral(sorted[midPoint:], numbers - midPoint, dimention)
+    a1, b1, dist_left, count1 = ClosestPairPointGeneral(sorted[:midPoint], midPoint, dimention)
+    a2, b2, dist_right, count2 = ClosestPairPointGeneral(sorted[midPoint:], numbers - midPoint, dimention)
     
     # Mengambil nilai minimum dari jarak terdekat bagian kanan dan kiri serta titiknya
     min = minimum(dist_left, dist_right)
@@ -157,7 +162,7 @@ def ClosestPairPointGeneral(listOfPoints, numbers, dimention) :
             lineCenter.append(sorted[i])
     
     # Mengambil nilai terkecuil disekitar lineCenter
-    p1, p2, val = lineCenterClosest(lineCenter, len(lineCenter), min, am, bm, dimention)
+    p1, p2, val, count3 = lineCenterClosest(lineCenter, len(lineCenter), min, am, bm, dimention)
     
     # Membandingkan nilai sekitar lineCenter dengan nilai minimum partisi dan ambil titiknya
     min_pol = minimum(min, val)
@@ -167,35 +172,43 @@ def ClosestPairPointGeneral(listOfPoints, numbers, dimention) :
     else :
         a_min = p1
         b_min = p2
+        
+    count_total = count1 + count2 + count3
     
     # mengembalikan hasil final, yaitu kedua titik dengan jarak terdekat dan jaraknya
-    return a_min, b_min, min_pol
+    return a_min, b_min, min_pol, count_total
     
 # 6.1. Implementasi Strategi Bruteforce untuk titik 3 dimensi
 def bruteForceDist(listOfPoints) :
+    compare = 0  # Inisiasi jumlah perbandingan yang dilakukan
     shortest = EuclideanDist3(listOfPoints[0], listOfPoints[1])
 
     for i in range (len(listOfPoints)) :
         for j in range(len(listOfPoints)) :
-            if (i != j) and (EuclideanDist3(listOfPoints[i], listOfPoints[j]) <= shortest):
-                shortest = EuclideanDist3(listOfPoints[i], listOfPoints[j])
-                a = listOfPoints[i]
-                b = listOfPoints[j]
+            if (i != j):
+                compare += 1
+                if (EuclideanDist3(listOfPoints[i], listOfPoints[j]) <= shortest):
+                    shortest = EuclideanDist3(listOfPoints[i], listOfPoints[j])
+                    a = listOfPoints[i]
+                    b = listOfPoints[j]
                 
-    return a, b, shortest
+    return a, b, shortest, compare
 
 # 6.2. Implementasi Strategi Bruteforce untuk dimensi tergeneralisasi [BONUS]
 def bruteForceDistGeneral(listOfPoints, dimention) :
+    compare = 0  # Inisiasi jumlah perbandingan yang dilakukan
     shortest = EuclideanDistGeneral(listOfPoints[0], listOfPoints[1], dimention)
 
     for i in range (len(listOfPoints)) :
         for j in range(len(listOfPoints)) :
-            if (i != j) and (EuclideanDistGeneral(listOfPoints[i], listOfPoints[j], dimention) <= shortest):
-                shortest = EuclideanDistGeneral(listOfPoints[i], listOfPoints[j], dimention)
-                a = listOfPoints[i]
-                b = listOfPoints[j]
+            if (i != j):
+                compare += 1
+                if (EuclideanDistGeneral(listOfPoints[i], listOfPoints[j], dimention) <= shortest):
+                    shortest = EuclideanDistGeneral(listOfPoints[i], listOfPoints[j], dimention)
+                    a = listOfPoints[i]
+                    b = listOfPoints[j]
                 
-    return a, b, shortest
+    return a, b, shortest, compare
 
 # 7.1. Visualisasi titik dalam bidang 3 Dimensi - Normal
 def visualize(listOfPoints) :
@@ -237,7 +250,7 @@ def printPoint(Point) :
         a += ", "
     a += str(Point[n])
     a += ")"
-    print(a)
+    print(a, end="")
 
 # 9. Cetak titik dari matriks
 def printPointMatrix(ListOfPoint) :
@@ -256,7 +269,6 @@ def printPointMatrix(ListOfPoint) :
         print(a)
     
     printPoint(ListOfPoint[long])
-        
 
 # 10. Program Utama
 os.system('cls') # Clear screen
@@ -267,7 +279,8 @@ print("====================  INPUT  ====================")
 print("Data titik seperti apa yang kamu pilih ?")
 print("1. Tiga dimensi")
 print("2. N dimensi")
-pilihan = int(input("Masukkan pilihanmu (1/2) : "))
+print("Masukkan pilihanmu [1/2]")
+pilihan = int(input("> "))
 
 # Validasi masukan
 while (pilihan != 1 and pilihan != 2):
@@ -276,71 +289,118 @@ while (pilihan != 1 and pilihan != 2):
     print("Data titik seperti apa yang kamu pilih ?")
     print("1. Tiga dimensi")
     print("2. N dimensi")
-    pilihan = int(input("Masukkan pilihanmu (1/2) : "))
+    print("Masukkan pilihanmu [1/2]")
+    pilihan = int(input("> "))
     
 # Pemrosesan berdasarkan pilihan
 if (pilihan == 1):
     print("\n=============  PASANGAN 3 DIMENSI  ==============")
-    titik = int(input("Masukkan jumlah titik : "))
+    print("Masukkan jumlah titik")
+    titik = int(input("> "))
     pointMatrix = ListRandomPoint(3, titik)
-
-    if titik <= 100 :
-        print("\n===========  PEMBANGKITAN TITIK ACAK  ===========")
-        print("Daftar kumpulan titik")
-        printPointMatrix(pointMatrix)
-
-    else :
-        with open('result.txt', 'w') as f:
-            sys.stdout = f
-            print("\n===========  PEMBANGKITAN TITIK ACAK  ===========")
-            print("Daftar kumpulan titik")
-            printPointMatrix(pointMatrix)
-            print("\n===============  HASIL ALGORITMA  ===============")
-            pts1, pts2, shortest1 = bruteForceDist(pointMatrix)
-            print("Menurut Algoritma BruteForce --")
-            print(f'Dua titik terdekat yaitu {pts1} dan {pts2} dengan jarak {shortest1}')
-            pts3, pts4, shortestcln1 = ClosestPairPoint3(pointMatrix, titik)
-            print("Menurut Algoritma Divide and Conquer --")
-            print(f'Dua titik terdekat yaitu {pts3} dan {pts4} dengan jarak {shortestcln1}')
     
-    # # Validasi masukan
-    # while (pilihan != "Y" and pilihan != "y" and pilihan != "N" and pilihan != "n"):
-    #     print("Pilihan tidak valid, ulangi!")
-    #     print("-------------------------------------------------\n")
-    #     print("Apakah ingin menampilkan hasil ilustrasi titik ?")
-    #     pilihan = input("Masukkan pilihanmu (Y/n) : ")
+    print("\n===========  PEMBANGKITAN TITIK ACAK  ===========")
+    print("Daftar kumpulan titik")
+    # Case handling untuk masukan diatas 100
+    if titik <= 100 :
+        printPointMatrix(pointMatrix)
+    else :
+        print("Karena jumlah titik yang banyak, maka data titik akan disimpan pada Result.txt")
+        with open('Result.txt', 'w') as file:
+            file.write(f'{printPointMatrix(pointMatrix)}')
+            
+    print("\n\n===============  HASIL ALGORITMA  ===============")
+    start_bf = time.time()
+    pts1, pts2, shortest1, compare1 = bruteForceDist(pointMatrix)
+    finish_bf = time.time()
+    start_dc = time.time()
+    pts3, pts4, shortestcln1, compare2 = ClosestPairPoint3(pointMatrix, titik)
+    finish_dc = time.time()
+    print("Algoritma BruteForce --")
+    print('Pasangan titik terdekat : ', end="") 
+    printPoint(pts1)
+    print(", ", end= "")
+    printPoint(pts2) 
+    print(f"\nJarak                   : {shortest1}")
+    print("\nAlgoritma Divide and Conquer --")
+    print('Pasangan titik terdekat : ', end="") 
+    printPoint(pts3)
+    print(", ", end= "")
+    printPoint(pts4) 
+    print(f"\nJarak                   : {shortestcln1}")
+    
+    print("\n==================  STATISTIK  ==================")
+    print("Algoritma BruteForce --")
+    print(f'Jumlah perbandingan : {compare1}')
+    print(f'Waktu Eksekusi      : {finish_bf - start_bf} sekon\n')
+    print("Algoritma Divide and Conquer --")
+    print(f'Jumlah perbandingan : {compare2}')
+    print(f'Waktu Eksekusi      : {finish_dc - start_dc} sekon')
+    
+    # Penampilan grafik
+    print("\n==============  PENAMPILAN GRAFIK  ==============")
+    print("Apakah ingin menampilkan hasil ilustrasi titik ?")
+    print("Masukkan pilihanmu [Y/n]")
+    pilihan = input("> ")
+    
+    # Validasi masukan
+    while (pilihan != "Y" and pilihan != "y" and pilihan != "N" and pilihan != "n"):
+        print("Pilihan tidak valid, ulangi!")
+        print("-------------------------------------------------\n")
+        print("Apakah ingin menampilkan hasil ilustrasi titik ?")
+        print("Masukkan pilihanmu [Y/n]")
+        pilihan = input("> ")
         
-    # # Pemrosesan masukan
-    # if (pilihan == "Y" or pilihan == "y"):
-    #     print("\nPemrosesan sedang berlangsung....")
-    #     visualizeMinimum(pointMatrix, pts1, pts2)
-    #     print(" ")
+    # Pemrosesan masukan
+    if (pilihan == "Y" or pilihan == "y"):
+        print("\nPemrosesan sedang berlangsung....")
+        visualizeMinimum(pointMatrix, pts1, pts2)
+        print(" ")
+    else :
+        print(" ")
         
 else :
     print("\n=============  PASANGAN N DIMENSI  ==============")
-    dimensi = int(input("Masukkan jumlah dimensi : "))
-    titik = int(input("Masukkan jumlah titik : "))
+    print("Masukkan jumlah dimensi")
+    dimensi = int(input("> "))
+    print("Masukkan jumlah titik")
+    titik = int(input("> "))
     pointMatrix = ListRandomPoint(dimensi, titik)
-
-    if (titik <= 100) :
-        print("\n===========  PEMBANGKITAN TITIK ACAK  ===========")
-        print("Daftar kumpulan titik")
+    
+    print("\n===========  PEMBANGKITAN TITIK ACAK  ===========")
+    print("Daftar kumpulan titik")
+    # Case handling untuk masukan diatas 100
+    if titik <= 100 :
         printPointMatrix(pointMatrix)
-        print("\n===============  HASIL ALGORITMA  ===============")
-        pts1, pts2, shortest1 = bruteForceDistGeneral(pointMatrix, dimensi)
-        print("Menurut Algoritma BruteForce --")
-        print(f'Dua titik terdekat yaitu {pts1} dan {pts2} dengan jarak {shortest1}')
-        pts3, pts4, shortestcln1 = ClosestPairPointGeneral(pointMatrix, titik, dimensi)
-        print("Menurut Algoritma Divide and Conquer --")
-        print(f'Dua titik terdekat yaitu {pts3} dan {pts4} dengan jarak {shortestcln1}\n')
     else :
-        with open('result.txt', 'w') as f:
-            sys.stdout = f
-            printPointMatrix(pointMatrix)
-            print("\n===============  HASIL ALGORITMA  ===============")
-            pts1, pts2, shortest1 = bruteForceDistGeneral(pointMatrix, dimensi)
-            print("Menurut Algoritma BruteForce --")
-            print(f'Dua titik terdekat yaitu {pts1} dan {pts2} dengan jarak {shortest1}')
-            pts3, pts4, shortestcln1 = ClosestPairPointGeneral(pointMatrix, titik, dimensi)
-            print("Menurut Algoritma Divide and Conquer --")
-            print(f'Dua titik terdekat yaitu {pts3} dan {pts4} dengan jarak {shortestcln1}\n')
+        print("Karena jumlah titik yang banyak, maka data titik akan disimpan pada Result.txt")
+        with open('Result.txt', 'w') as file:
+            file.write(f'{printPointMatrix(pointMatrix)}')
+            
+    print("\n\n===============  HASIL ALGORITMA  ===============")
+    start_bf = time.time()
+    pts1, pts2, shortest1, compare1 = bruteForceDistGeneral(pointMatrix, dimensi)
+    finish_bf = time.time()
+    start_dc = time.time()
+    pts3, pts4, shortestcln1, compare2 = ClosestPairPointGeneral(pointMatrix, titik, dimensi)
+    finish_dc = time.time()
+    print("Algoritma BruteForce --")
+    print('Pasangan titik terdekat : ', end="") 
+    printPoint(pts1)
+    print(", ", end= "")
+    printPoint(pts2) 
+    print(f"\nJarak                   : {shortest1}")
+    print("\nAlgoritma Divide and Conquer --")
+    print('Pasangan titik terdekat : ', end="") 
+    printPoint(pts3)
+    print(", ", end= "")
+    printPoint(pts4) 
+    print(f"\nJarak                   : {shortestcln1}")
+    
+    print("\n==================  STATISTIK  ==================")
+    print("Algoritma BruteForce --")
+    print(f'Jumlah perbandingan : {compare1}')
+    print(f'Waktu Eksekusi      : {finish_bf - start_bf} sekon\n')
+    print("Algoritma Divide and Conquer --")
+    print(f'Jumlah perbandingan : {compare2}')
+    print(f'Waktu Eksekusi      : {finish_dc - start_dc} sekon\n')
