@@ -1,6 +1,7 @@
 # Implementasi Algoritma Utama
 # Importing modules
 import os
+import sys
 import math
 import random
 import matplotlib.pyplot as plt
@@ -282,47 +283,64 @@ if (pilihan == 1):
     print("\n=============  PASANGAN 3 DIMENSI  ==============")
     titik = int(input("Masukkan jumlah titik : "))
     pointMatrix = ListRandomPoint(3, titik)
-    print("\n===========  PEMBANGKITAN TITIK ACAK  ===========")
-    print("Daftar kumpulan titik")
-    printPointMatrix(pointMatrix)
-    print("\n===============  HASIL ALGORITMA  ===============")
-    pts1, pts2, shortest1 = bruteForceDist(pointMatrix)
-    print("Menurut Algoritma BruteForce --")
-    print(f'Dua titik terdekat yaitu {pts1} dan {pts2} dengan jarak {shortest1}')
-    pts3, pts4, shortestcln1 = ClosestPairPoint3(pointMatrix, titik)
-    print("Menurut Algoritma Divide and Conquer --")
-    print(f'Dua titik terdekat yaitu {pts3} dan {pts4} dengan jarak {shortestcln1}')
+
+    if titik <= 100 :
+        print("\n===========  PEMBANGKITAN TITIK ACAK  ===========")
+        print("Daftar kumpulan titik")
+        printPointMatrix(pointMatrix)
+
+    else :
+        with open('result.txt', 'w') as f:
+            sys.stdout = f
+            print("\n===========  PEMBANGKITAN TITIK ACAK  ===========")
+            print("Daftar kumpulan titik")
+            printPointMatrix(pointMatrix)
+            print("\n===============  HASIL ALGORITMA  ===============")
+            pts1, pts2, shortest1 = bruteForceDist(pointMatrix)
+            print("Menurut Algoritma BruteForce --")
+            print(f'Dua titik terdekat yaitu {pts1} dan {pts2} dengan jarak {shortest1}')
+            pts3, pts4, shortestcln1 = ClosestPairPoint3(pointMatrix, titik)
+            print("Menurut Algoritma Divide and Conquer --")
+            print(f'Dua titik terdekat yaitu {pts3} dan {pts4} dengan jarak {shortestcln1}')
     
-    # Penampilan grafik
-    print("\n==============  PENAMPILAN GRAFIK  ==============")
-    print("Apakah ingin menampilkan hasil ilustrasi titik ?")
-    pilihan = input("Masukkan pilihanmu (Y/n) : ")
-    
-    # Validasi masukan
-    while (pilihan != "Y" and pilihan != "y" and pilihan != "N" and pilihan != "n"):
-        print("Pilihan tidak valid, ulangi!")
-        print("-------------------------------------------------\n")
-        print("Apakah ingin menampilkan hasil ilustrasi titik ?")
-        pilihan = input("Masukkan pilihanmu (Y/n) : ")
+    # # Validasi masukan
+    # while (pilihan != "Y" and pilihan != "y" and pilihan != "N" and pilihan != "n"):
+    #     print("Pilihan tidak valid, ulangi!")
+    #     print("-------------------------------------------------\n")
+    #     print("Apakah ingin menampilkan hasil ilustrasi titik ?")
+    #     pilihan = input("Masukkan pilihanmu (Y/n) : ")
         
-    # Pemrosesan masukan
-    if (pilihan == "Y" or pilihan == "y"):
-        print("\nPemrosesan sedang berlangsung....")
-        visualizeMinimum(pointMatrix, pts1, pts2)
-        print(" ")
+    # # Pemrosesan masukan
+    # if (pilihan == "Y" or pilihan == "y"):
+    #     print("\nPemrosesan sedang berlangsung....")
+    #     visualizeMinimum(pointMatrix, pts1, pts2)
+    #     print(" ")
         
 else :
     print("\n=============  PASANGAN N DIMENSI  ==============")
     dimensi = int(input("Masukkan jumlah dimensi : "))
     titik = int(input("Masukkan jumlah titik : "))
     pointMatrix = ListRandomPoint(dimensi, titik)
-    print("\n===========  PEMBANGKITAN TITIK ACAK  ===========")
-    print("Daftar kumpulan titik")
-    printPointMatrix(pointMatrix)
-    print("\n===============  HASIL ALGORITMA  ===============")
-    pts1, pts2, shortest1 = bruteForceDistGeneral(pointMatrix, dimensi)
-    print("Menurut Algoritma BruteForce --")
-    print(f'Dua titik terdekat yaitu {pts1} dan {pts2} dengan jarak {shortest1}')
-    pts3, pts4, shortestcln1 = ClosestPairPointGeneral(pointMatrix, titik, dimensi)
-    print("Menurut Algoritma Divide and Conquer --")
-    print(f'Dua titik terdekat yaitu {pts3} dan {pts4} dengan jarak {shortestcln1}\n')
+
+    if (titik <= 100) :
+        print("\n===========  PEMBANGKITAN TITIK ACAK  ===========")
+        print("Daftar kumpulan titik")
+        printPointMatrix(pointMatrix)
+        print("\n===============  HASIL ALGORITMA  ===============")
+        pts1, pts2, shortest1 = bruteForceDistGeneral(pointMatrix, dimensi)
+        print("Menurut Algoritma BruteForce --")
+        print(f'Dua titik terdekat yaitu {pts1} dan {pts2} dengan jarak {shortest1}')
+        pts3, pts4, shortestcln1 = ClosestPairPointGeneral(pointMatrix, titik, dimensi)
+        print("Menurut Algoritma Divide and Conquer --")
+        print(f'Dua titik terdekat yaitu {pts3} dan {pts4} dengan jarak {shortestcln1}\n')
+    else :
+        with open('result.txt', 'w') as f:
+            sys.stdout = f
+            printPointMatrix(pointMatrix)
+            print("\n===============  HASIL ALGORITMA  ===============")
+            pts1, pts2, shortest1 = bruteForceDistGeneral(pointMatrix, dimensi)
+            print("Menurut Algoritma BruteForce --")
+            print(f'Dua titik terdekat yaitu {pts1} dan {pts2} dengan jarak {shortest1}')
+            pts3, pts4, shortestcln1 = ClosestPairPointGeneral(pointMatrix, titik, dimensi)
+            print("Menurut Algoritma Divide and Conquer --")
+            print(f'Dua titik terdekat yaitu {pts3} dan {pts4} dengan jarak {shortestcln1}\n')
