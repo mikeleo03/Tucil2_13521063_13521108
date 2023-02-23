@@ -64,16 +64,16 @@ def lineCenterClosest(lineCenter, size, minimum, am, bm, dimention):
     count = 0
     for i in range(size):
         for j in range(i+1, size):
-            count += 1
             # Kalau ukurannya lebih besar dari delta, lewati
             if (lineCenter[j][1] - lineCenter[i][1]) >= min_dist:
                 break
-
-            # Kalau lebih kecil, update nilai terkecilnya dan titik yang berkoresponden
-            if EuclideanDistGeneral(lineCenter[i], lineCenter[j], dimention) < min_dist:
-                min_dist = EuclideanDistGeneral(lineCenter[i], lineCenter[j], dimention)
-                min_p1 = lineCenter[i]
-                min_p2 = lineCenter[j]
+            else :
+                count += 1
+                # Kalau lebih kecil, update nilai terkecilnya dan titik yang berkoresponden
+                if EuclideanDistGeneral(lineCenter[i], lineCenter[j], dimention) < min_dist:
+                    min_dist = EuclideanDistGeneral(lineCenter[i], lineCenter[j], dimention)
+                    min_p1 = lineCenter[i]
+                    min_p2 = lineCenter[j]
     
     # Pengembalian dua titik terdekat dalam batas lineCenter dan jaraknya
     return min_p1, min_p2, min_dist, count
@@ -241,7 +241,7 @@ def visualizeMinimum(listOfPoints, point1, point2) :
 
     plt.show()
 
-# 8. Cetak titik dalam bentuk kurung
+# 8.1. Cetak titik dalam bentuk kurung di terminal
 def printPoint(Point) :
     n = len(Point) - 1
     a = "("
@@ -251,8 +251,19 @@ def printPoint(Point) :
     a += str(Point[n])
     a += ")"
     print(a, end="")
+    
+# 8.2. Cetak titik dalam bentuk kurung di file
+def printPointFile(Point, f) :
+    n = len(Point) - 1
+    a = "("
+    for i in range (len(Point) - 1) :
+        a += str(Point[i])
+        a += ", "
+    a += str(Point[n])
+    a += ")"
+    print(a, file=f)
 
-# 9. Cetak titik dari matriks
+# 9.1. Cetak titik dari matriks di terminal
 def printPointMatrix(ListOfPoint) :
     long = len(ListOfPoint) - 1
     
@@ -269,6 +280,24 @@ def printPointMatrix(ListOfPoint) :
         print(a)
     
     printPoint(ListOfPoint[long])
+    
+# 9.2. Cetak titik dari matriks di file
+def printPointMatrixFile(ListOfPoint, f) :
+    long = len(ListOfPoint) - 1
+    
+    for i in range (long) :
+        n = len(ListOfPoint[i]) - 1
+        a = "("
+
+        for j in range (len(ListOfPoint[i]) - 1) :
+            a += str(ListOfPoint[i][j])
+            a += ", "
+        a += str(ListOfPoint[i][n])
+        a += "),"
+
+        print(a, file=f)
+    
+    printPointFile(ListOfPoint[long], f)
 
 # 10. Program Utama
 os.system('cls') # Clear screen
@@ -301,15 +330,18 @@ if (pilihan == 1):
     
     print("\n===========  PEMBANGKITAN TITIK ACAK  ===========")
     print("Daftar kumpulan titik")
+    
     # Case handling untuk masukan diatas 100
     if titik <= 100 :
         printPointMatrix(pointMatrix)
+        print("")
     else :
         print("Karena jumlah titik yang banyak, maka data titik akan disimpan pada Result.txt")
-        with open('Result.txt', 'w') as file:
-            file.write(f'{printPointMatrix(pointMatrix)}')
+        with open('Result.txt', 'w') as f:
+            print('Daftar titik yang dibangkitkan :\n', file=f)
+            printPointMatrixFile(pointMatrix, f)
             
-    print("\n\n===============  HASIL ALGORITMA  ===============")
+    print("\n===============  HASIL ALGORITMA  ===============")
     start_bf = time.time()
     pts1, pts2, shortest1, compare1 = bruteForceDist(pointMatrix)
     finish_bf = time.time()
@@ -369,15 +401,18 @@ else :
     
     print("\n===========  PEMBANGKITAN TITIK ACAK  ===========")
     print("Daftar kumpulan titik")
+    
     # Case handling untuk masukan diatas 100
     if titik <= 100 :
         printPointMatrix(pointMatrix)
+        print("")
     else :
         print("Karena jumlah titik yang banyak, maka data titik akan disimpan pada Result.txt")
-        with open('Result.txt', 'w') as file:
-            file.write(f'{printPointMatrix(pointMatrix)}')
+        with open('Result.txt', 'w') as f:
+            print('Daftar titik yang dibangkitkan :\n', file=f)
+            printPointMatrixFile(pointMatrix, f)
             
-    print("\n\n===============  HASIL ALGORITMA  ===============")
+    print("\n===============  HASIL ALGORITMA  ===============")
     start_bf = time.time()
     pts1, pts2, shortest1, compare1 = bruteForceDistGeneral(pointMatrix, dimensi)
     finish_bf = time.time()
