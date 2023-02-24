@@ -8,13 +8,12 @@ def BruteForceDist(listOfPoints) :
     shortest = Point.EuclideanDist3(listOfPoints[0], listOfPoints[1])
 
     for i in range (len(listOfPoints)) :
-        for j in range(len(listOfPoints)) :
-            if (i != j):
-                compare += 1
-                if (Point.EuclideanDist3(listOfPoints[i], listOfPoints[j]) <= shortest):
-                    shortest = Point.EuclideanDist3(listOfPoints[i], listOfPoints[j])
-                    a = listOfPoints[i]
-                    b = listOfPoints[j]
+        for j in range(i+1, len(listOfPoints)) :
+            compare += 1
+            if (Point.EuclideanDist3(listOfPoints[i], listOfPoints[j]) <= shortest):
+                shortest = Point.EuclideanDist3(listOfPoints[i], listOfPoints[j])
+                a = listOfPoints[i]
+                b = listOfPoints[j]
                 
     return a, b, shortest, compare
 
@@ -24,12 +23,11 @@ def BruteForceDistGeneral(listOfPoints, dimention) :
     shortest = Point.EuclideanDistGeneral(listOfPoints[0], listOfPoints[1], dimention)
 
     for i in range (len(listOfPoints)) :
-        for j in range(len(listOfPoints)) :
-            if (i != j):
-                compare += 1
-                if (Point.EuclideanDistGeneral(listOfPoints[i], listOfPoints[j], dimention) <= shortest):
-                    shortest = Point.EuclideanDistGeneral(listOfPoints[i], listOfPoints[j], dimention)
-                    a = listOfPoints[i]
-                    b = listOfPoints[j]
+        for j in range(i+1, len(listOfPoints)) :
+            compare += 1
+            if (Point.EuclideanDistGeneral(listOfPoints[i], listOfPoints[j], dimention) <= shortest):
+                shortest = Point.EuclideanDistGeneral(listOfPoints[i], listOfPoints[j], dimention)
+                a = listOfPoints[i]
+                b = listOfPoints[j]
                 
     return a, b, shortest, compare

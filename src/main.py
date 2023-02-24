@@ -34,8 +34,8 @@ pilihan = int(input(">> "))
 
 # Validasi masukan
 while (pilihan != 1 and pilihan != 2):
-    print("Pilihan tidak valid, ulangi!")
-    print("-----------------------------------------------------------------\n")
+    print("> Pilihan tidak valid, ulangi!")
+    print("-----------------------------------------------------------------")
     print("Data titik seperti apa yang kamu pilih ?")
     print("1. Tiga dimensi")
     print("2. N dimensi")
@@ -98,8 +98,8 @@ if (pilihan == 1):
     
     # Validasi masukan
     while (pilihan != "Y" and pilihan != "y" and pilihan != "N" and pilihan != "n"):
-        print("Pilihan tidak valid, ulangi!")
-        print("-----------------------------------------------------------------\n")
+        print("> Pilihan tidak valid, ulangi!")
+        print("-----------------------------------------------------------------")
         print("Apakah ingin menampilkan hasil ilustrasi titik ?")
         print("Masukkan pilihanmu [Y/n]")
         pilihan = input(">> ")
