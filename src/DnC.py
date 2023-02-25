@@ -18,7 +18,6 @@ def LineCenterClosest(lineCenter, size, minimum, am, bm, dimention):
     min_p2 = bm
     
     # Membuat lineCenter dengan melakukan pengurutan berdasarkan nilai koordinat [1]
-    # lineCenter = sorted(lineCenter, key=lambda point: point[1])
     lineCenter = Point.QuickSort(lineCenter, 0, len(lineCenter) - 1, 1)
 
     # Melakukan pengujian jarak terdekat dari titik disekitar pusat dalam batas toleransi
@@ -26,13 +25,14 @@ def LineCenterClosest(lineCenter, size, minimum, am, bm, dimention):
     for i in range(size):
         for j in range(i+1, size):
             # Kalau ukurannya lebih besar dari delta, lewati
-            if (lineCenter[j][1] - lineCenter[i][1]) >= min_dist:
+            if abs(lineCenter[j][1] - lineCenter[i][1]) >= min_dist/2:
                 break
             else :
-                count += 1
                 # Kalau lebih kecil, update nilai terkecilnya dan titik yang berkoresponden
-                if Point.EuclideanDistGeneral(lineCenter[i], lineCenter[j], dimention) < min_dist:
-                    min_dist = Point.EuclideanDistGeneral(lineCenter[i], lineCenter[j], dimention)
+                titik = Point.EuclideanDistGeneral(lineCenter[i], lineCenter[j], dimention)
+                count += 1
+                if titik <= min_dist:
+                    min_dist = titik
                     min_p1 = lineCenter[i]
                     min_p2 = lineCenter[j]
     
@@ -48,7 +48,6 @@ def ClosestPairPoint3(listOfPoints, numbers) :
         return a, b, dist, count
     
     # Sebelum melakukan pemrosesan, titik diurutkan menaik berdasarkan nilai koordinat [0]
-    # sorted = Point.SortPoints(listOfPoints)
     sorted = Point.QuickSort(listOfPoints, 0, len(listOfPoints) - 1, 0)
     
     # Ambil titik tengah partisi
@@ -99,7 +98,6 @@ def ClosestPairPointGeneral(listOfPoints, numbers, dimention) :
         return a, b, dist, count
     
     # Sebelum melakukan pemrosesan, titik diurutkan menaik berdasarkan nilai koordinat [0]
-    # sorted = Point.SortPoints(listOfPoints)
     sorted = Point.QuickSort(listOfPoints, 0, len(listOfPoints) - 1, 0)
     
     # Ambil titik tengah partisi

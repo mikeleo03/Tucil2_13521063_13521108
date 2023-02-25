@@ -10,8 +10,9 @@ def BruteForceDist(listOfPoints) :
     for i in range (len(listOfPoints)) :
         for j in range(i+1, len(listOfPoints)) :
             compare += 1
-            if (Point.EuclideanDist3(listOfPoints[i], listOfPoints[j]) <= shortest):
-                shortest = Point.EuclideanDist3(listOfPoints[i], listOfPoints[j])
+            titik = Point.EuclideanDist3(listOfPoints[i], listOfPoints[j])
+            if (titik <= shortest):
+                shortest = titik
                 a = listOfPoints[i]
                 b = listOfPoints[j]
                 
@@ -25,8 +26,9 @@ def BruteForceDistGeneral(listOfPoints, dimention) :
     for i in range (len(listOfPoints)) :
         for j in range(i+1, len(listOfPoints)) :
             compare += 1
-            if (Point.EuclideanDistGeneral(listOfPoints[i], listOfPoints[j], dimention) <= shortest):
-                shortest = Point.EuclideanDistGeneral(listOfPoints[i], listOfPoints[j], dimention)
+            titik = Point.EuclideanDistGeneral(listOfPoints[i], listOfPoints[j], dimention)
+            if (titik <= shortest):
+                shortest = titik
                 a = listOfPoints[i]
                 b = listOfPoints[j]
                 
