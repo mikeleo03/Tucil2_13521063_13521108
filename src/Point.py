@@ -5,7 +5,7 @@ import math
 
 # 1. Pembangkit titik koordinat acak
 def RandomPoint(dimention) :
-    return [random.randint(-100, 100) for i in range (dimention)]
+    return [round(random.uniform(-1000, 1000), 2) for i in range (dimention)]
 
 # 2. Inisialisasi senarai hasil pembangkit titik koordinat acak
 def ListRandomPoint(dimention, numbers) :
@@ -34,7 +34,38 @@ def EuclideanDistGeneral(point1, point2, dimention) :
     # Finalisasi hasil
     return math.sqrt(result)
 
-# 5. Melakukan pengurutan titik berdasarkan nilai koordinat [0]
-def SortPoints(listOfPoints) :
-    listOfPoints.sort(key = lambda point : point[0])
+# 5. Implementasi QuickSort
+# 5.1. Partisi untuk performasi QuicSort
+def Partition(listOfPoints, min, max, target):
+    pivot = listOfPoints[max]  # menentukan pivot
+    i = min - 1  # penunjuk i
+
+    # bandingkan nilai dengan pivot
+    for j in range(min, max):
+        if listOfPoints[j][target] <= pivot[target]:
+            # kalau lebih kecil, pindah penunjuk i ke elemen selanjutnya
+            i = i + 1
+            # Prosedur swap
+            temp = listOfPoints[i]
+            listOfPoints[i] = listOfPoints[j]
+            listOfPoints[j] = temp
+
+    # jangan lupa swap yang terakhir
+    temp = listOfPoints[i + 1]
+    listOfPoints[i + 1] = listOfPoints[max]
+    listOfPoints[max] = temp
+
+    # kembalikan posisi partisi
+    return i + 1
+
+# 5.2. Algoritma utama QuickSort
+def QuickSort(listOfPoints, min, max, target):
+    if min < max:
+        # menentukan letak partisi berdasarkan prosedur sebelumnya
+        pos = Partition(listOfPoints, min, max, target)
+        # Jalankan rekursifitas untuk bagian kanan dan kiri pivot
+        QuickSort(listOfPoints, min, pos - 1, target)
+        QuickSort(listOfPoints, pos + 1, max, target)
+    
+    # Kembalikan hasil sort
     return listOfPoints

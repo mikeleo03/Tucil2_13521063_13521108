@@ -18,7 +18,8 @@ def LineCenterClosest(lineCenter, size, minimum, am, bm, dimention):
     min_p2 = bm
     
     # Membuat lineCenter dengan melakukan pengurutan berdasarkan nilai koordinat [1]
-    lineCenter = sorted(lineCenter, key=lambda point: point[1])
+    # lineCenter = sorted(lineCenter, key=lambda point: point[1])
+    lineCenter = Point.QuickSort(lineCenter, 0, len(lineCenter) - 1, 1)
 
     # Melakukan pengujian jarak terdekat dari titik disekitar pusat dalam batas toleransi
     count = 0
@@ -46,8 +47,9 @@ def ClosestPairPoint3(listOfPoints, numbers) :
         # Mengembalikan 2 titik dan nilai jaraknya
         return a, b, dist, count
     
-    # Sebelum melakukan pemrosesan, titik diurutkan menaik menggunakan fungsi sortPoints
-    sorted = Point.SortPoints(listOfPoints)
+    # Sebelum melakukan pemrosesan, titik diurutkan menaik berdasarkan nilai koordinat [0]
+    # sorted = Point.SortPoints(listOfPoints)
+    sorted = Point.QuickSort(listOfPoints, 0, len(listOfPoints) - 1, 0)
     
     # Ambil titik tengah partisi
     midPoint = numbers // 2
@@ -96,8 +98,9 @@ def ClosestPairPointGeneral(listOfPoints, numbers, dimention) :
         # Mengembalikan 2 titik dan nilai jaraknya
         return a, b, dist, count
     
-    # Sebelum melakukan pemrosesan, titik diurutkan menaik menggunakan fungsi sortPoints
-    sorted = Point.SortPoints(listOfPoints)
+    # Sebelum melakukan pemrosesan, titik diurutkan menaik berdasarkan nilai koordinat [0]
+    # sorted = Point.SortPoints(listOfPoints)
+    sorted = Point.QuickSort(listOfPoints, 0, len(listOfPoints) - 1, 0)
     
     # Ambil titik tengah partisi
     midPoint = numbers // 2

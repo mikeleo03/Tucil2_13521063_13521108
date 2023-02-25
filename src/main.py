@@ -30,20 +30,20 @@ print("Data titik seperti apa yang kamu pilih ?")
 print("1. Tiga dimensi")
 print("2. N dimensi")
 print("Masukkan pilihanmu [1/2]")
-pilihan = int(input(">> "))
+pilihan = input(">> ")
 
 # Validasi masukan
-while (pilihan != 1 and pilihan != 2):
+while (pilihan != "1" and pilihan != "2"):
     print("> Pilihan tidak valid, ulangi!")
     print("-----------------------------------------------------------------")
     print("Data titik seperti apa yang kamu pilih ?")
     print("1. Tiga dimensi")
     print("2. N dimensi")
     print("Masukkan pilihanmu [1/2]")
-    pilihan = int(input(">> "))
+    pilihan = input(">> ")
     
 # Pemrosesan berdasarkan pilihan
-if (pilihan == 1):
+if (pilihan == "1"):
     print("\n=====================  PASANGAN 3 DIMENSI  ======================")
     print("Masukkan jumlah titik")
     titik = int(input(">> "))
