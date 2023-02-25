@@ -18,23 +18,38 @@ def LineCenterClosest(lineCenter, size, minimum, am, bm, dimention):
     min_p2 = bm
     
     # Membuat lineCenter dengan melakukan pengurutan berdasarkan nilai koordinat [1]
-    lineCenter = Point.QuickSort(lineCenter, 0, len(lineCenter) - 1, 1)
+    if (dimention > 1):
+        lineCenter = Point.QuickSort(lineCenter, 0, len(lineCenter) - 1, 1)
+    else :
+        lineCenter = Point.QuickSort(lineCenter, 0, len(lineCenter) - 1, 0)
 
     # Melakukan pengujian jarak terdekat dari titik disekitar pusat dalam batas toleransi
     count = 0
     for i in range(size):
         for j in range(i+1, size):
             # Kalau ukurannya lebih besar dari delta, lewati
-            if abs(lineCenter[j][1] - lineCenter[i][1]) >= min_dist/2:
-                break
+            if (dimention > 1):
+                if abs(lineCenter[j][1] - lineCenter[i][1]) >= min_dist/2:
+                    break
+                else :
+                    # Kalau lebih kecil, update nilai terkecilnya dan titik yang berkoresponden
+                    titik = Point.EuclideanDistGeneral(lineCenter[i], lineCenter[j], dimention)
+                    count += 1
+                    if titik <= min_dist:
+                        min_dist = titik
+                        min_p1 = lineCenter[i]
+                        min_p2 = lineCenter[j]
             else :
-                # Kalau lebih kecil, update nilai terkecilnya dan titik yang berkoresponden
-                titik = Point.EuclideanDistGeneral(lineCenter[i], lineCenter[j], dimention)
-                count += 1
-                if titik <= min_dist:
-                    min_dist = titik
-                    min_p1 = lineCenter[i]
-                    min_p2 = lineCenter[j]
+                if abs(lineCenter[j][0] - lineCenter[i][0]) >= min_dist/2:
+                    break
+                else :
+                    # Kalau lebih kecil, update nilai terkecilnya dan titik yang berkoresponden
+                    titik = Point.EuclideanDistGeneral(lineCenter[i], lineCenter[j], dimention)
+                    count += 1
+                    if titik <= min_dist:
+                        min_dist = titik
+                        min_p1 = lineCenter[i]
+                        min_p2 = lineCenter[j]
     
     # Pengembalian dua titik terdekat dalam batas lineCenter dan jaraknya
     return min_p1, min_p2, min_dist, count
@@ -118,10 +133,9 @@ def ClosestPairPointGeneral(listOfPoints, numbers, dimention) :
         
     # Mendefinisikan lineCenters, mengisi elemen linecenter dengan batas nilai delta, yaitu min
     lineCenter = []
-    if (dimention > 1):
-        for i in range(numbers):
-            if abs(sorted[i][0] - sorted[midPoint][0]) < min:
-                lineCenter.append(sorted[i])
+    for i in range(numbers):
+        if abs(sorted[i][0] - sorted[midPoint][0]) < min:
+            lineCenter.append(sorted[i])
     
     # Mengambil nilai terkecuil disekitar lineCenter
     p1, p2, val, count3 = LineCenterClosest(lineCenter, len(lineCenter), min, am, bm, dimention)
