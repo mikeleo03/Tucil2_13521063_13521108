@@ -2,21 +2,7 @@
 # 0. Impor modul eksternal
 import matplotlib.pyplot as plt
 
-# 1. Visualisasi titik dalam bidang 3 Dimensi - Normal
-def Visualize(listOfPoints) :
-    fig = plt.figure(figsize=(11,7))
-    ax = fig.add_subplot(111, projection='3d')
-
-    for i in range (len(listOfPoints)) :
-        x = listOfPoints[i][0]
-        y = listOfPoints[i][1]
-        z = listOfPoints[i][2]
-
-        ax.scatter(x,y,z, color='red')
-    
-    plt.show()
-
-# 2. Visualisasi titik dalam bidang 3 Dimensi - Perjelas Minimum [BONUS]
+# 1. Visualisasi titik dalam bidang 3 Dimensi - Perjelas Minimum [BONUS]
 def VisualizeMinimum(listOfPoints, point1, point2) :
     fig = plt.figure(figsize=(11,7))
     ax = fig.add_subplot(111, projection='3d')
@@ -33,7 +19,7 @@ def VisualizeMinimum(listOfPoints, point1, point2) :
 
     plt.show()
 
-# 3. Cetak titik dalam bentuk kurung di terminal
+# 2. Cetak titik dalam bentuk kurung di terminal
 def printPoint(Point) :
     n = len(Point) - 1
     a = "("
@@ -44,7 +30,7 @@ def printPoint(Point) :
     a += ")"
     print(a, end="")
     
-# 4. Cetak titik dalam bentuk kurung di file
+# 3. Cetak titik dalam bentuk kurung di file
 def printPointFile(Point, f) :
     n = len(Point) - 1
     a = "("
@@ -55,7 +41,7 @@ def printPointFile(Point, f) :
     a += ")"
     print(a, file=f)
 
-# 5. Cetak titik dari matriks di terminal
+# 4. Cetak titik dari matriks di terminal
 def printPointMatrix(ListOfPoint) :
     long = len(ListOfPoint) - 1
     
@@ -73,7 +59,7 @@ def printPointMatrix(ListOfPoint) :
     
     printPoint(ListOfPoint[long])
     
-# 6. Cetak titik dari matriks di file
+# 5. Cetak titik dari matriks di file
 def printPointMatrixFile(ListOfPoint, f) :
     long = len(ListOfPoint) - 1
     
