@@ -18,13 +18,14 @@ Program untuk mencari solusi permasalahan pencarian pasangan titik dengan jarak 
 ```bash
 .
 ├─── doc
+|   ├─── Tucil2_13521063_13521108.pdf
+|   └─── Result.txt
 ├─── src
 |   ├─── BruteForce.py
 |   ├─── DnC.py
 |   ├─── Main.py
 |   ├─── Point.py
 |   └─── Visual.py
-├─── Result.txt
 └─── README.md
 ```
 

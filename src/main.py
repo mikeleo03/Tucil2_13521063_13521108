@@ -61,8 +61,8 @@ if (pilihan == "1"):
     if titik <= 50 :
         Visual.printPointMatrix(pointMatrix)
     else :
-        print("Karena jumlah titik yang banyak, maka data titik akan disimpan pada Result.txt")
-        with open('Result.txt', 'w') as f:
+        print("Karena jumlah titik yang banyak, maka data titik akan disimpan pada doc/Result.txt")
+        with open('doc/Result.txt', 'w') as f:
             print('Daftar titik yang dibangkitkan :\n', file=f)
             Visual.printPointMatrixFile(pointMatrix, f)
             
@@ -136,8 +136,8 @@ else :
     if titik <= 50 :
         Visual.printPointMatrix(pointMatrix)
     else :
-        print("Karena jumlah titik yang banyak, maka data titik akan disimpan pada Result.txt")
-        with open('Result.txt', 'w') as f:
+        print("Karena jumlah titik yang banyak, maka data titik akan disimpan pada doc/Result.txt")
+        with open('doc/Result.txt', 'w') as f:
             print('Daftar titik yang dibangkitkan :\n', file=f)
             Visual.printPointMatrixFile(pointMatrix, f)
             
