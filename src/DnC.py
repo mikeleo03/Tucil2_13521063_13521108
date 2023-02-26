@@ -29,7 +29,7 @@ def LineCenterClosest(lineCenter, size, minimum, am, bm, dimention):
         for j in range(i+1, size):
             # Kalau ukurannya lebih besar dari delta, lewati
             if (dimention > 1):
-                if abs(lineCenter[j][1] - lineCenter[i][1]) >= min_dist/2:
+                if abs(lineCenter[j][1] - lineCenter[i][1]) >= min_dist:
                     break
                 else :
                     # Kalau lebih kecil, update nilai terkecilnya dan titik yang berkoresponden
@@ -40,7 +40,7 @@ def LineCenterClosest(lineCenter, size, minimum, am, bm, dimention):
                         min_p1 = lineCenter[i]
                         min_p2 = lineCenter[j]
             else :
-                if abs(lineCenter[j][0] - lineCenter[i][0]) >= min_dist/2:
+                if abs(lineCenter[j][0] - lineCenter[i][0]) >= min_dist:
                     break
                 else :
                     # Kalau lebih kecil, update nilai terkecilnya dan titik yang berkoresponden

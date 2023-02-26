@@ -47,6 +47,11 @@ if (pilihan == "1"):
     print("\n=====================  PASANGAN 3 DIMENSI  ======================")
     print("Masukkan jumlah titik")
     titik = int(input(">> "))
+    while (titik < 2):
+        print("> Jumlah titik harus lebih dari 1!")
+        print("-----------------------------------------------------------------")
+        print("Masukkan jumlah titik")
+        titik = int(input(">> "))
     pointMatrix = Point.ListRandomPoint(3, titik)
     
     print("\n===================  PEMBANGKITAN TITIK ACAK  ===================")
@@ -118,6 +123,11 @@ else :
     dimensi = int(input(">> "))
     print("Masukkan jumlah titik")
     titik = int(input(">> "))
+    while (titik < 2):
+        print("> Jumlah titik harus lebih dari 1!")
+        print("-----------------------------------------------------------------")
+        print("Masukkan jumlah titik")
+        titik = int(input(">> "))
     pointMatrix = Point.ListRandomPoint(dimensi, titik)
     
     print("\n===================  PEMBANGKITAN TITIK ACAK  ===================")
