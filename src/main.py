@@ -11,18 +11,18 @@ import Visual
 os.system('cls') # Clear screen
 print('''
                  = Tugas Kecil 2 Strategi Algoritma  =                                                
-   _|_|_|  _|                                            _|      
- _|        _|    _|_|      _|_|_|    _|_|      _|_|_|  _|_|_|_|  
- _|        _|  _|    _|  _|_|      _|_|_|_|  _|_|        _|      
- _|        _|  _|    _|      _|_|  _|            _|_|    _|      
-   _|_|_|  _|    _|_|    _|_|_|      _|_|_|  _|_|_|        _|_|  
-                                                                                                 
- _|_|_|              _|              Points Detector -
- _|    _|    _|_|_|      _|  _|_|    Divide and Conquer Algorithm
- _|_|_|    _|    _|  _|  _|_|           
- _|        _|    _|  _|  _|          Made by :
- _|          _|_|_|  _|  _|          13521063 / 13521108
-      ''')
+\033[31m   _|_|_|  _|             \033[33m                  \033[32m             _|      
+\033[31m _|        _|    _|_|  \033[33m    _|_|_|    _|_| \033[32m     _|_|_|  _|_|_|_|  
+\033[31m _|        _|  _|    \033[33m_|  _|_|      _|_|_\033[32m|_|  _|_|        _|      
+\033[31m _|        _|  _|  \033[33m  _|      _|_|  _| \033[32m           _|_|    _| \033[34m     
+\033[31m   _|_|_|  _|    _\033[33m|_|    _|_|_|   \033[32m   _|_|_|  _|_|_|       \033[34m _|_|  
+\033[31m               \033[33m                \033[32m                         \033[34m                                         
+\033[31m _|_|_|        \033[33m      _|     \033[32m         Points Detector \033[34m-
+\033[31m _|    _|  \033[33m  _|_|_|      _|\033[32m  _|_|    Divide and \033[34mConquer Algorithm
+\033[31m _|_|_|  \033[33m  _|    _|  _|  \033[32m_|_|                 \033[34m
+\033[31m _|     \033[33m   _|    _|  _|\033[32m  _|          Made \033[34mby :
+\033[31m _|  \033[33m        _|_|_| \033[32m _|  _|          \033[34m13221063 / 13221108 
+\033[0m      ''')
 
 # Tampilan pilihan menu
 print("============================  INPUT  ============================")
@@ -34,7 +34,7 @@ pilihan = input(">> ")
 
 # Validasi masukan
 while (pilihan != "1" and pilihan != "2"):
-    print("> Pilihan tidak valid, ulangi!")
+    print('\033[93m' + f"> Pilihan tidak valid, ulangi!" + '\033[0m')
     print("-----------------------------------------------------------------")
     print("Data titik seperti apa yang kamu pilih ?")
     print("1. Tiga dimensi")
@@ -48,7 +48,7 @@ if (pilihan == "1"):
     print("Masukkan jumlah titik")
     titik = int(input(">> "))
     while (titik < 2):
-        print("> Jumlah titik harus lebih dari 1!")
+        print('\033[93m' + f"> Jumlah titik harus lebih dari 1!" + '\033[0m')
         print("-----------------------------------------------------------------")
         print("Masukkan jumlah titik")
         titik = int(input(">> "))
@@ -60,7 +60,6 @@ if (pilihan == "1"):
     # Case handling untuk masukan diatas 50
     if titik <= 50 :
         Visual.printPointMatrix(pointMatrix)
-        print("")
     else :
         print("Karena jumlah titik yang banyak, maka data titik akan disimpan pada Result.txt")
         with open('Result.txt', 'w') as f:
@@ -78,22 +77,22 @@ if (pilihan == "1"):
     print('Pasangan titik terdekat : ', end="") 
     Visual.printPoint(pts1)
     print(", ", end= "")
-    Visual.printPoint(pts2) 
-    print(f"\nJarak                   : {shortest1}")
+    Visual.printPoint(pts2)
+    print(f"\nJarak                   : \033[92m{shortest1}"  + '\033[0m')
     print("\nAlgoritma Divide and Conquer --")
     print('Pasangan titik terdekat : ', end="") 
     Visual.printPoint(pts3)
     print(", ", end= "")
-    Visual.printPoint(pts4) 
-    print(f"\nJarak                   : {shortestcln1}")
+    Visual.printPoint(pts4)
+    print(f"\nJarak                   : \033[92m{shortestcln1}" + '\033[0m')
     
     print("\n==========================  STATISTIK  ==========================")
     print("Algoritma BruteForce --")
-    print(f'Jumlah perbandingan : {compare1}')
-    print(f'Waktu Eksekusi      : {finish_bf - start_bf} sekon\n')
+    print(f'Jumlah perbandingan : \033[92m{compare1}' + '\033[0m')
+    print(f'Waktu Eksekusi      : \033[92m{finish_bf - start_bf} sekon\n' + '\033[0m')
     print("Algoritma Divide and Conquer --")
-    print(f'Jumlah perbandingan : {compare2}')
-    print(f'Waktu Eksekusi      : {finish_dc - start_dc} sekon')
+    print(f'Jumlah perbandingan : \033[92m{compare2}' + '\033[0m')
+    print(f'Waktu Eksekusi      : \033[92m{finish_dc - start_dc} sekon' + '\033[0m')
     
     # Penampilan grafik
     print("\n======================  PENAMPILAN GRAFIK  ======================")
@@ -103,7 +102,7 @@ if (pilihan == "1"):
     
     # Validasi masukan
     while (pilihan != "Y" and pilihan != "y" and pilihan != "N" and pilihan != "n"):
-        print("> Pilihan tidak valid, ulangi!")
+        print('\033[93m' + f"> Pilihan tidak valid, ulangi!" + '\033[0m')
         print("-----------------------------------------------------------------")
         print("Apakah ingin menampilkan hasil ilustrasi titik ?")
         print("Masukkan pilihanmu [Y/n]")
@@ -124,7 +123,7 @@ else :
     print("Masukkan jumlah titik")
     titik = int(input(">> "))
     while (titik < 2):
-        print("> Jumlah titik harus lebih dari 1!")
+        print('\033[93m' + f"> Jumlah titik harus lebih dari 1!" + '\033[0m')
         print("-----------------------------------------------------------------")
         print("Masukkan jumlah titik")
         titik = int(input(">> "))
@@ -136,7 +135,6 @@ else :
     # Case handling untuk masukan diatas 50
     if titik <= 50 :
         Visual.printPointMatrix(pointMatrix)
-        print("")
     else :
         print("Karena jumlah titik yang banyak, maka data titik akan disimpan pada Result.txt")
         with open('Result.txt', 'w') as f:
@@ -154,19 +152,19 @@ else :
     print('Pasangan titik terdekat : ', end="") 
     Visual.printPoint(pts1)
     print(", ", end= "")
-    Visual.printPoint(pts2) 
-    print(f"\nJarak                   : {shortest1}")
+    Visual.printPoint(pts2)
+    print(f"\nJarak                   : \033[92m{shortest1}"  + '\033[0m')
     print("\nAlgoritma Divide and Conquer --")
     print('Pasangan titik terdekat : ', end="") 
     Visual.printPoint(pts3)
     print(", ", end= "")
-    Visual.printPoint(pts4) 
-    print(f"\nJarak                   : {shortestcln1}")
+    Visual.printPoint(pts4)
+    print(f"\nJarak                   : \033[92m{shortestcln1}" + '\033[0m')
     
     print("\n==========================  STATISTIK  ==========================")
     print("Algoritma BruteForce --")
-    print(f'Jumlah perbandingan : {compare1}')
-    print(f'Waktu Eksekusi      : {finish_bf - start_bf} sekon\n')
+    print(f'Jumlah perbandingan : \033[92m{compare1}' + '\033[0m')
+    print(f'Waktu Eksekusi      : \033[92m{finish_bf - start_bf} sekon\n' + '\033[0m')
     print("Algoritma Divide and Conquer --")
-    print(f'Jumlah perbandingan : {compare2}')
-    print(f'Waktu Eksekusi      : {finish_dc - start_dc} sekon\n')
+    print(f'Jumlah perbandingan : \033[92m{compare2}' + '\033[0m')
+    print(f'Waktu Eksekusi      : \033[92m{finish_dc - start_dc} sekon\n' + '\033[0m')

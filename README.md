@@ -8,6 +8,7 @@
 * [Requirements](#requirements)
 * [Cara Menjalankan Program](#cara-menjalankan-program)
 * [Project Status](#project-status)
+* [Screenshots](#pscreenshots)
 * [Author](#author)
 
 ## Deskripsi Singkat Program
@@ -52,6 +53,9 @@ Status : *Completed*
 | Luaran program sudah benar (solusi *closest pair* benar) | ✓ |  |
 | Bonus 1 dikerjakan | ✓ |  |
 | Bonus 2 dikerjakan | ✓ |  |
+
+## Screenshots
+![screenshots](doc/screenshots.PNG)
 
 ## Author
 Nama : Michael Leon Putra Widhi </br>

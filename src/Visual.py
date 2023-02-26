@@ -28,7 +28,7 @@ def printPoint(Point) :
         a += ", "
     a += str(Point[n])
     a += ")"
-    print(a, end="")
+    print('\033[92m' + a + '\033[0m', end="")
     
 # 3. Cetak titik dalam bentuk kurung di file
 def printPointFile(Point, f) :
@@ -43,7 +43,7 @@ def printPointFile(Point, f) :
 
 # 4. Cetak titik dari matriks di terminal
 def printPointMatrix(ListOfPoint) :
-    long = len(ListOfPoint) - 1
+    long = len(ListOfPoint)
     
     for i in range (long) :
         n = len(ListOfPoint[i]) - 1
@@ -53,11 +53,13 @@ def printPointMatrix(ListOfPoint) :
             a += str(ListOfPoint[i][j])
             a += ", "
         a += str(ListOfPoint[i][n])
-        a += "),"
+        
+        if (i != long - 1):
+            a += "),"
+        else :
+            a += ")"
 
-        print(a)
-    
-    printPoint(ListOfPoint[long])
+        print("\033[34m" + a + '\033[0m')
     
 # 5. Cetak titik dari matriks di file
 def printPointMatrixFile(ListOfPoint, f) :
