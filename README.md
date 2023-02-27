@@ -31,6 +31,7 @@ Program untuk mencari solusi permasalahan pencarian pasangan titik dengan jarak 
 
 ## Requirements
 * Python3 (versi 3.10.10 atau yang lebih baru)
+* *Library* matplotlib
 
 ## Cara Menjalankan Program
 1. Pastikan Python3 versi terbaru sudah terpasang pada mesin eksekusi (Anda dapat mengecek versi Python3 dengan menjalankan *command* `python3 --version` pada *command prompt*).
