@@ -2,6 +2,7 @@
 # Impor modul eksternal, termasuk file
 import os
 import time
+import platform
 import Point
 import DnC
 import BruteForce
@@ -168,3 +169,13 @@ else :
     print("Algoritma Divide and Conquer --")
     print(f'Jumlah perbandingan : \033[92m{compare2}' + '\033[0m')
     print(f'Waktu Eksekusi      : \033[92m{finish_dc - start_dc} sekon\n' + '\033[0m')
+    
+print("=====================  SPESIFIKASI SISTEM  ======================")
+print("Berikut adalah detail spesifikasi sistem Anda")
+envi = platform.uname()
+print(f"System: \033[34m{envi.system}" + '\033[0m')
+print(f"Node Name: \033[34m{envi.node}" + '\033[0m')
+print(f"Release: \033[34m{envi.release}" + '\033[0m')
+print(f"Version: \033[34m{envi.version}" + '\033[0m')
+print(f"Machine: \033[34m{envi.machine}" + '\033[0m')
+print(f"Processor: \033[34m{envi.processor}\n" + '\033[0m')
